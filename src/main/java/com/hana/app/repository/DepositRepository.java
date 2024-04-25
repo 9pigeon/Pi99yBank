@@ -1,4 +1,11 @@
 package com.hana.app.repository;
 
-public class DepositRepository {
+import com.hana.app.data.dto.DepositDto;
+import com.hana.app.frame.HanaRepository;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Mapper
+public interface DepositRepository extends HanaRepository<String, DepositDto> {
 }
