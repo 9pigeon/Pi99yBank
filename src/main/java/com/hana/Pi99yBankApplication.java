@@ -1,4 +1,4 @@
-package com.hana.app;
+package com.hana;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
