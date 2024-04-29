@@ -48,10 +48,8 @@ dependencies {
 
     //JASYPT
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
-
     //JSON
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-
 }
 
 tasks.named('test') {
