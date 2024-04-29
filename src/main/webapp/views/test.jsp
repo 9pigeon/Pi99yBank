@@ -12,6 +12,6 @@
 </head>
 <body>
     <h1>TEST</h1>
-    <h5>${sessionScope.kakaoInfo.nickname}님 환영합니다.</h5>
+    <h5>${sessionScope.kakaoInfo.userNickname}님 환영합니다.</h5>
 </body>
 </html>

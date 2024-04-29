@@ -1,6 +1,6 @@
 package com.hana.app.service;
 
-import com.hana.app.data.dto.KakaoDto;
+import com.hana.app.data.dto.UserDto;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ public class KakaoService {
                 + "&response_type=code";
     }
 
-    public KakaoDto getKakaoInfo(String code) throws Exception {
+    public UserDto getKakaoInfo(String code) throws Exception {
         if (code == null) throw new Exception("Failed get authorization code");
 
         String accessToken = "";
@@ -76,7 +76,7 @@ public class KakaoService {
         return getUserInfoWithToken(accessToken);
     }
 
-    private KakaoDto getUserInfoWithToken(String accessToken) throws Exception {
+    private UserDto getUserInfoWithToken(String accessToken) throws Exception {
         //HttpHeader 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -102,9 +102,9 @@ public class KakaoService {
         String email = String.valueOf(account.get("email"));
         String nickname = String.valueOf(profile.get("nickname"));
 
-        return KakaoDto.builder()
-                .id(id)
-                .email(email)
-                .nickname(nickname).build();
+        return UserDto.builder()
+                .userId(id)
+                .kakaoId(email)
+                .userNickname(nickname).build();
     }
 }

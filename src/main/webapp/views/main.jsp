@@ -6,6 +6,63 @@
 <link rel="stylesheet" href="<c:url value="/css/naver1.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/naver2.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/naver3.css"/>">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+        $(document).ready(function() {
+        $('.ProductFilter_item__PhP2B').click(function() {
+            // data-nclicks 속성값을 가져옵니다.
+            var nclicksValue = $(this).data('nclicks');
+
+            // data-nclicks 값이 'deposit.benefit'인 경우에만 처리합니다.
+            if (nclicksValue === 'deposit.benefit') {
+                // 체크박스 디파짓 베네피트 요소를 찾습니다.
+                var depositBenefitCheckbox = $('#checkbox-depositBenefit');
+
+                // 체크박스가 보이는 상태인지 확인합니다.
+                if (depositBenefitCheckbox.is(":visible")) {
+                    // 보이는 상태라면 숨깁니다.
+                    depositBenefitCheckbox.hide();
+                } else {
+                    // 안 보이는 상태라면 보이게 합니다.
+                    depositBenefitCheckbox.show();
+                }
+            }
+        });
+
+        // 체크된 체크박스의 값을 저장할 배열을 선언합니다.
+        // var checkedValues = [];
+
+            // li 요소를 클릭했을 때
+            $('.ProductButtonBoxFilter_item__RIt_0').click(function () {
+                // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
+                $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
+
+                // 체크된 체크박스의 값을 업데이트합니다.
+                updateCheckedValues();
+            });
+
+            // 모든 체크박스를 선택하고 체크된 값을 가져와 배열에 저장합니다.
+            function updateCheckedValues() {
+                let checkedValues = []; // 배열 초기화
+
+                // 모든 체크박스를 선택합니다.
+                $('.ProductButtonBoxFilter_item__RIt_0 input[type="checkbox"]').each(function () {
+                    // 체크박스가 체크되어 있는지 확인합니다.
+                    if ($(this).is(':checked')) {
+                        // 체크된 체크박스의 값을 가져와서 배열에 추가합니다.
+                        var values = $(this).val(); // 해당 체크박스의 라벨 텍스트를 가져옵니다.
+                        checkedValues.push(values);
+                    }
+                });
+
+                // 체크된 값들을 출력합니다.
+                console.log("체크된 값들:", checkedValues);
+            }
+        });
+
+</script>
+
 <body>
 <div id="__next">
     <div class="SkipNavigation-module_article__e-Te9"><a href="#content" class="SkipNavigation-module_link__vqXAe">본문
@@ -566,6 +623,104 @@
                                     <span class="blind">오른쪽 스크롤</span></button>
                             </div>
                         </div>
+                    </div>
+                    <div id ="checkbox-depositBenefit" class="ProductButtonBoxFilter_article__Jetia" style="display: none;">
+                        <div class="ProductButtonBoxFilter_inner__G7UCr">
+                            <ul class="ProductButtonBoxFilter_list__hkcbi">
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-online" value="9"><label
+                                        for="checkbox-online" class="ProductButtonBoxFilter_label__OOSMj">비대면가입<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-bankApp" value="2"><label
+                                        for="checkbox-bankApp" class="ProductButtonBoxFilter_label__OOSMj">은행앱사용<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-usingSalaryAccount" value="4"><label
+                                        for="checkbox-usingSalaryAccount" class="ProductButtonBoxFilter_label__OOSMj">급여연동<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-pension" value="6"><label
+                                        for="checkbox-pension" class="ProductButtonBoxFilter_label__OOSMj">연금<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-usingUtilityBill" value="5"><label
+                                        for="checkbox-usingUtilityBill" class="ProductButtonBoxFilter_label__OOSMj">공과금연동<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-usingCard" value="8"><label
+                                        for="checkbox-usingCard" class="ProductButtonBoxFilter_label__OOSMj">카드사용<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-firstBanking" value="1"><label
+                                        for="checkbox-firstBanking" class="ProductButtonBoxFilter_label__OOSMj">첫거래<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-depositAccount" value="7"><label
+                                        for="checkbox-depositAccount"
+                                        class="ProductButtonBoxFilter_label__OOSMj">입출금통장<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                                <li class="ProductButtonBoxFilter_item__RIt_0"><input type="checkbox"
+                                                                                      name="product_type" class="hidden"
+                                                                                      id="checkbox-depositAgain" value="3"><label
+                                        for="checkbox-depositAgain" class="ProductButtonBoxFilter_label__OOSMj">재예치<span
+                                        class="ProductButtonBoxFilter_icon__cz1Fg" aria-hidden="true"><svg width="10"
+                                                                                                           height="10"
+                                                                                                           viewBox="0 0 10 10"><path
+                                        fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
+                                                                                         d="M4.615 0h1v10h-1z"></path></svg></span></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="ProductButtonBoxFilter_guide__a8Csp">*신협 상품에는 적용되지 않습니다</p>
                     </div>
                     <div class="ProductFilterTags_article__LS1Oc">
                         <div class="ProductFilterTags_area-keyword__AmEYF">
