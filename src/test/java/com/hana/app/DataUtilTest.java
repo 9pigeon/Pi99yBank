@@ -19,5 +19,6 @@ public class DataUtilTest {
 
     void contextLoads() throws IOException, ParseException {
         log.info(dataUtil.getSavings().toString());
+        log.info(dataUtil.getDeposits().toString());
     }
 }

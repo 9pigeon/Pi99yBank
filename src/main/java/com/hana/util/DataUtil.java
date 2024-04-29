@@ -1,6 +1,7 @@
 package com.hana.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hana.app.data.dto.DepositDto;
 import com.hana.app.data.dto.SavingDto;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -54,5 +55,34 @@ public class DataUtil {
         br.close();
         conn.disconnect();
         return savings;
+    }
+
+    public List<DepositDto> getDeposits() throws IOException, ParseException {
+        List<DepositDto> deopsits = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        log.info(key);
+        String sendUrl = "https://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth="+key+"&topFinGrpNo=020000&pageNo=1";
+        StringBuilder urlBuilder = new StringBuilder(sendUrl); /*URL*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader br;
+        br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        StringBuilder response = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            response.append(line);
+        }
+        JSONObject resJson = (JSONObject) new JSONParser().parse(response.toString());
+        JSONObject result = (JSONObject) resJson.get("result");
+        JSONArray baseList = (JSONArray) result.get("baseList");
+        for (int i=0;i<baseList.size();i++){
+            JSONObject obj = (JSONObject) baseList.get(i);
+            deopsits.add(objectMapper.readValue(obj.toString(), DepositDto.class));
+        }
+        log.info(baseList.toString());
+        br.close();
+        conn.disconnect();
+        return deopsits;
     }
 }
