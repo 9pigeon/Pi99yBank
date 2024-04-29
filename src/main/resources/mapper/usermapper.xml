@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.UserRepository">
+
+    <select id="selectOne" parameterType="String" resultType="userDto">
+        SELECT * FROM appuser WHERE id=#{id}
+    </select>
+    <select id="select" resultType="userDto">
+        SELECT * FROM appuser
+    </select>
+    <insert id="insert" parameterType="userDto">
+        INSERT INTO appuser (user_id, kakao_id, user_nickname)
+        SELECT #{userId}, #{kakaoId}, #{userNickname}
+            WHERE NOT EXISTS (
+                SELECT 1 FROM appuser WHERE user_id = #{userId}
+        )
+
+    </insert>
+    <update id="update" parameterType="userDto">
+        UPDATE appuser SET pw=#{pw},name=#{name} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM appuser WHERE id=#{id}
+    </delete>
+
+</mapper>
