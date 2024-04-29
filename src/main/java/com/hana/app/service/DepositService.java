@@ -1,6 +1,6 @@
 package com.hana.app.service;
 
-import com.hana.app.data.dto.DepositDto;
+import com.hana.app.data.DepositDto;
 import com.hana.app.frame.HanaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

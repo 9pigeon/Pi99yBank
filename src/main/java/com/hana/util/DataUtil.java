@@ -1,16 +1,14 @@
 package com.hana.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hana.app.data.dto.DepositDto;
-import com.hana.app.data.dto.SavingDto;
-import lombok.experimental.UtilityClass;
+import com.hana.app.data.DepositDto;
+import com.hana.app.data.SavingDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
