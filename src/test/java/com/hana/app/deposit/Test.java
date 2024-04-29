@@ -69,7 +69,7 @@ class Test{
 
         for(Object object : depositArray){
             JSONObject depositObject = (JSONObject) object;
-            log.info("-----------product of : "+depositObject.get("kor_co_nm").toString()+"-----------");
+            log.info("-----------product of : "+depositObject.get("fin_prdt_cd").toString()+"-----------");
             Map<String, Map<String, String>> parsedResults = parse((String) depositObject.get("spcl_cnd"));
             for(Map.Entry<String, Map<String, String>> entry : parsedResults.entrySet()){
                 String idx = entry.getKey();
