@@ -12,10 +12,13 @@ spring:
       prefix: /views/
       suffix: .jsp
   datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: ENC(le08h7RAhKKeUgOjZU1aTJxQHtgBlqfIOLgwWwGcpnbLIsSvopOpkh/Q/hpMoPurEAm90LJG3FlTtbIrQOvbu8hlwhmQfMKB28AdgFMDkYANw4+dlDDXOw==)
-    username: ENC(rqu4ZgOWl8dR9mRztzCPHw==)
-    password: ENC(ld3qcrN986OL7IlWWDlgZ+69r+JppCls)
+    driver-class-name:  net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/pi99ydb?characterEncoding=utf8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8&serverTimezone=Asia/Seoul
+    #user01/111111
+    username: pi99y
+    password: 123123
 mybatis:
   type-aliases-package: com.hana.app.data.dto
   mapper-locations: classpath:/mapper/*.xml
@@ -26,4 +29,8 @@ logging:
     root: info
 finlife:
   key: ENC(GMcCBuleyAnHZqetaRO0anJQIFB9sd4nqKTfjuxvKP0L8zoLK9NB9gj9HGbFlmvl)
-
+app:
+  kakao:
+    client-id: 6010fcb18c95b478809e9791063221af
+    client-secret: C3G32lHm9Zlw4ZXRQpkPfAS1MJ41bwej
+    redirect-url: http://localhost:8080/kakao/access
