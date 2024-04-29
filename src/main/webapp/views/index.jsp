@@ -2,7 +2,10 @@
 <!-- JSTL -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-
+<script>
+  let kakaourl = '${kakaoUrl}';
+  console.log(kakaourl);
+</script>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -27,7 +30,9 @@
     <div class="footer">
       <div class="container text-center">
         <div>
-          <a href="#">회사소개&nbsp;&nbsp;<span>|</span></a>
+          <a href="${kakaoUrl}">
+            <img src="<c:url value="/img/kakao.png"/>" alt="카카오 로그인">
+          </a>
         </div>
       </div>
     </div>
