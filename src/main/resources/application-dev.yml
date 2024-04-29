@@ -24,4 +24,6 @@ mybatis:
 logging:
   level:
     root: info
+finlife:
+  key: ENC(GMcCBuleyAnHZqetaRO0anJQIFB9sd4nqKTfjuxvKP0L8zoLK9NB9gj9HGbFlmvl)
 
