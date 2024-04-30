@@ -1,37 +1,43 @@
 package com.hana.app.service;
 
-import com.hana.app.data.dto.DepositDto;
+import com.hana.app.data.DepositDto;
 import com.hana.app.frame.HanaService;
+import com.hana.app.repository.DepositRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DepositService implements HanaService<Integer, DepositDto> {
+@Slf4j
+public class DepositService implements HanaService<String, DepositDto> {
+
+    final DepositRepository depositRepository;
     @Override
     public int add(DepositDto depositDto) throws Exception {
-        return 0;
+        log.info(depositDto.toString());
+        return depositRepository.insert(depositDto);
     }
 
     @Override
-    public int del(Integer integer) throws Exception {
-        return 0;
+    public int del(String id) throws Exception {
+        return depositRepository.delete(id);
     }
 
     @Override
     public int modify(DepositDto depositDto) throws Exception {
-        return 0;
+        return depositRepository.update(depositDto);
     }
 
     @Override
-    public DepositDto get(Integer integer) throws Exception {
-        return null;
+    public DepositDto get(String id) throws Exception {
+        return depositRepository.selectOne(id);
     }
 
     @Override
     public List<DepositDto> get() throws Exception {
-        return null;
+        return depositRepository.select();
     }
 }
