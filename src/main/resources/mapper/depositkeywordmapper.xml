@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//KO"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 <mapper namespace="com.hana.app.repository.DepositKeywordRepository">
 
     <select id="selectOne" parameterType="depositKeywordPKDto" resultType="depositKeywordDto">
@@ -24,4 +25,18 @@
         DELETE FROM depositKeyword WHERE product_id=#{productId} and term_id=#{termId}
     </delete>
 
+=======
+<mapper namespace="com.hana.app.repository.DepogKeywordRepository">
+
+    <delete id="reset">
+        TRUNCATE depositKeyword
+    </delete>
+
+    <insert id="insert" parameterType="depositKeywordDto">
+        INSERT INTO savingKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
+    </insert>
+
+
+
+>>>>>>> c7b7797b5f14d580dc734e5c179bc838c4de6bc5
 </mapper>

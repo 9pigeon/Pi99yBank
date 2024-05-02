@@ -3,17 +3,8 @@ package com.hana.util;
 import com.hana.app.data.DepositDto;
 import com.hana.app.data.DepositKeywordDto;
 import com.hana.app.data.DepositKeywordPKDto;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import com.hana.app.data.SavingDto;
+import com.hana.app.data.SavingKeywordDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,9 +57,10 @@ public class DataKeywordUtil {
 
     public static Map<String, Map<String, String>> parseSpclCnd(String targets) {
         Map<String, Map<String, String>> results = new HashMap<>();
-        //String[] terms = targets.replace("\\n", "태규지후수진").split("태규지후수진");
-        String[] terms = targets.split("\\\\n");
-
+        String[] terms = targets.split("\\n");
+        if (terms.length == 0) {
+            terms = targets.split("\\\\n");
+        }
         int termId = 0;
         for (String term : terms) {
             if (!term.isEmpty()) {
@@ -109,5 +101,29 @@ public class DataKeywordUtil {
             depositKeywordDtoList.add(depositKeywordDto);
         }
         return depositKeywordDtoList;
+
+    }
+
+
+    public static List<SavingKeywordDto> toSavingKeywordDtoList(SavingDto savingDto) {
+        List<SavingKeywordDto> savingKeywordDtoList = new ArrayList<>();
+
+        Map<String, Map<String, String>> parsedResults = parseSpclCnd(savingDto.getSpclCnd());
+        for(Map.Entry<String, Map<String, String>> entry : parsedResults.entrySet()){
+            String productId = savingDto.getFinPrdtCd();
+            String termId = entry.getKey();
+            String termContent = entry.getValue().get("termContent");
+            String termClass = entry.getValue().get("termClass");
+            String termRate = entry.getValue().get("termRate");
+            SavingKeywordDto savingKeywordDto = SavingKeywordDto.builder()
+                    .productId(productId)
+                    .termId(termId)
+                    .termClass(termClass)
+                    .termContent(termContent)
+                    .termRate(termRate)
+                    .build();
+            savingKeywordDtoList.add(savingKeywordDto);
+        }
+        return savingKeywordDtoList;
     }
 }
