@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
-import com.hana.app.data.DepositOptionDto;
 
 @Data
 @Builder
@@ -20,10 +18,10 @@ public class DepositDto {
     private String joinWay;
     private String mtrtInt;
     private String spclCnd;
-    private int joinDeny;
+    private String joinDeny;
     private String joinMember;
     private String etcNote;
-    private Long maxLimit;
+    private int maxLimit;
     private String dclsStrtDay;
     private String dclsEndDay;
     private String finCoSubmDay;

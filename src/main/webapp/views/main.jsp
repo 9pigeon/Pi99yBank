@@ -6,6 +6,63 @@
 <link rel="stylesheet" href="<c:url value="/css/naver1.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/naver2.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/naver3.css"/>">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+        $(document).ready(function() {
+        $('.ProductFilter_item__PhP2B').click(function() {
+            // data-nclicks 속성값을 가져옵니다.
+            var nclicksValue = $(this).data('nclicks');
+
+            // data-nclicks 값이 'deposit.benefit'인 경우에만 처리합니다.
+            if (nclicksValue === 'deposit.benefit') {
+                // 체크박스 디파짓 베네피트 요소를 찾습니다.
+                var depositBenefitCheckbox = $('#checkbox-depositBenefit');
+
+                // 체크박스가 보이는 상태인지 확인합니다.
+                if (depositBenefitCheckbox.is(":visible")) {
+                    // 보이는 상태라면 숨깁니다.
+                    depositBenefitCheckbox.hide();
+                } else {
+                    // 안 보이는 상태라면 보이게 합니다.
+                    depositBenefitCheckbox.show();
+                }
+            }
+        });
+
+        // 체크된 체크박스의 값을 저장할 배열을 선언합니다.
+        // var checkedValues = [];
+
+            // li 요소를 클릭했을 때
+            $('.ProductButtonBoxFilter_item__RIt_0').click(function () {
+                // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
+                $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
+
+                // 체크된 체크박스의 값을 업데이트합니다.
+                updateCheckedValues();
+            });
+
+            // 모든 체크박스를 선택하고 체크된 값을 가져와 배열에 저장합니다.
+            function updateCheckedValues() {
+                let checkedValues = []; // 배열 초기화
+
+                // 모든 체크박스를 선택합니다.
+                $('.ProductButtonBoxFilter_item__RIt_0 input[type="checkbox"]').each(function () {
+                    // 체크박스가 체크되어 있는지 확인합니다.
+                    if ($(this).is(':checked')) {
+                        // 체크된 체크박스의 값을 가져와서 배열에 추가합니다.
+                        var values = $(this).val(); // 해당 체크박스의 라벨 텍스트를 가져옵니다.
+                        checkedValues.push(values);
+                    }
+                });
+
+                // 체크된 값들을 출력합니다.
+                console.log("체크된 값들:", checkedValues);
+            }
+        });
+
+</script>
+
 <body>
 <div id="__next">
     <div class="SkipNavigation-module_article__e-Te9"><a href="#content" class="SkipNavigation-module_link__vqXAe">본문
@@ -492,17 +549,17 @@
                 </div>
 
 
-                <c:choose>
-                    <c:when test="${product == null}">
-                        <jsp:include page="deposit.jsp"/>
-                    </c:when>
-                    <c:otherwise>
-                        <jsp:include page="deposit.jsp"/>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${product==null}">
+                            <jsp:include page="saving.jsp"/>
+                        </c:when>
+                        <c:otherwise>
+                            <jsp:include page="saving.jsp"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

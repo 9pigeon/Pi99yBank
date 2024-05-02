@@ -36,11 +36,4 @@ public class SavingService implements HanaService<String, SavingDto>{
     public List<SavingDto> get() throws Exception {
         return savingRepository.select();
     }
-
-    @Override
-    public int reset() throws Exception {
-        return savingRepository.reset();
-    }
-
-
 }

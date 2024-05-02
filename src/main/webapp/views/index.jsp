@@ -10,15 +10,14 @@
     <!-- end of navigation -->
 
     <!-- start of center -->
-<%--    <c:choose>--%>
-<%--      <c:when test="${center == null}">--%>
-<%--        <jsp:include page="main.jsp"/>--%>
-<%--      </c:when>--%>
-<%--      <c:otherwise>--%>
-<%--        <jsp:include page="${center}.jsp"/>--%>
-<%--      </c:otherwise>--%>
-<%--    </c:choose>--%>
-    <h1>INDEX 페이지 입니다 로그인하세요</h1>
+    <c:choose>
+      <c:when test="${center == null}">
+        <jsp:include page="main.jsp"/>
+      </c:when>
+      <c:otherwise>
+        <jsp:include page="${center}.jsp"/>
+      </c:otherwise>
+    </c:choose>
     <!-- end of center -->
 
     <!-- start of footer -->

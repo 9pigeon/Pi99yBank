@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,12 +18,11 @@ public class SavingDto {
     private String joinWay;
     private String mtrtInt;
     private String spclCnd;
-    private int joinDeny;
+    private String joinDeny;
     private String joinMember;
     private String etcNote;
     private int maxLimit;
     private String dclsStrtDay;
     private String dclsEndDay;
     private String finCoSubmDay;
-    private List optionList;
 }
