@@ -2,19 +2,9 @@ package com.hana.util;
 
 import com.hana.app.data.DepositDto;
 import com.hana.app.data.DepositKeywordDto;
+import com.hana.app.data.DepositKeywordPKDto;
 import com.hana.app.data.SavingDto;
 import com.hana.app.data.SavingKeywordDto;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +76,7 @@ public class DataKeywordUtil {
     }
 
 
-    public static List<DepositKeywordDto> toDepositKeywordDtoList(DepositDto depositDto) {
+    public static List<DepositKeywordDto> toKeywordDtoList(DepositDto depositDto) {
         List<DepositKeywordDto> depositKeywordDtoList = new ArrayList<>();
 
         Map<String, Map<String, String>> parsedResults = parseSpclCnd(depositDto.getSpclCnd());
@@ -96,16 +86,22 @@ public class DataKeywordUtil {
             String termContent = entry.getValue().get("termContent");
             String termClass = entry.getValue().get("termClass");
             String termRate = entry.getValue().get("termRate");
-            DepositKeywordDto depositKeywordDto = DepositKeywordDto.builder()
+            DepositKeywordPKDto pkDto = DepositKeywordPKDto.builder()
                     .productId(productId)
-                    .termId(termId)
-                    .termClass(termClass)
-                    .termContent(termContent)
-                    .termRate(termRate)
+                    .termId(Integer.parseInt(termId))
                     .build();
+
+            DepositKeywordDto depositKeywordDto = DepositKeywordDto.builder()
+                    .depositKeywordPK(pkDto)
+                    .termClass(Integer.parseInt(termClass))
+                    .termContent(termContent)
+                    .termRate(Float.parseFloat(termRate))
+                    .build();
+
             depositKeywordDtoList.add(depositKeywordDto);
         }
         return depositKeywordDtoList;
+
     }
 
 

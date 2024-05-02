@@ -157,7 +157,7 @@ public class DataUtil {
                     .joinDeny(Integer.parseInt(obj.get("join_deny").toString()))
                     .joinMember(obj.get("join_member").toString())
                     .etcNote(obj.get("etc_note").toString())
-                    .maxLimit(Integer.parseInt(obj.get("max_limit")==null?"0":obj.get("max_limit").toString()))
+                    .maxLimit(Long.parseLong((obj.get("max_limit")==null?"0":obj.get("max_limit").toString())))
                     .dclsStrtDay(obj.get("dcls_strt_day").toString())
                     .dclsEndDay(obj.get("dcls_end_day")==null?"":obj.get("dcls_end_day").toString())
                     .finCoSubmDay(obj.get("fin_co_subm_day").toString())

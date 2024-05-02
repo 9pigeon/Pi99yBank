@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepositKeywordDto {
-    private String productId;
-    private String termId;
-    private String termClass;
+    private DepositKeywordPKDto depositKeywordPK;
+    private int termClass;
     private String termContent;
-    private String termRate;
+    private float termRate;
 }

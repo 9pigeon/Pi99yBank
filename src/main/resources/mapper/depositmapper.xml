@@ -11,6 +11,16 @@
     <select id="selectOne" parameterType="String" resultType="depositDto">
         SELECT * FROM depositProduct WHERE fin_prdt_cd=#{id}
     </select>
+    <select id="getDepositList" parameterType="int[]" resultType="depositDto">
+        SELECT p.fin_prdt_cd, p.kor_co_nm, p.fin_prdt_nm
+        FROM depositProduct AS p
+        JOIN depositKeyword AS k ON p.fin_prdt_cd = k.product_id
+        WHERE k.term_class IN
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by p.fin_prdt_cd;
+    </select>
     <select id="select" resultType="depositDto">
         SELECT * FROM depositProduct
     </select>
