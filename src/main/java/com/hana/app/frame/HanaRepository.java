@@ -8,4 +8,5 @@ public interface HanaRepository<K,V> {
     int update(V v) throws Exception;;
     V selectOne(K k) throws Exception;;
     List<V> select() throws Exception;;
+    int reset() throws Exception;
 }
