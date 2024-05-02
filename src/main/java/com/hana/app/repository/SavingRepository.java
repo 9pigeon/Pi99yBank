@@ -9,3 +9,4 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SavingRepository extends HanaRepository<String, SavingDto> {
 }
+

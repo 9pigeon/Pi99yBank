@@ -40,4 +40,9 @@ public class DepositService implements HanaService<String, DepositDto> {
     public List<DepositDto> get() throws Exception {
         return depositRepository.select();
     }
+
+    @Override
+    public int reset() throws Exception {
+        return depositRepository.reset();
+    }
 }

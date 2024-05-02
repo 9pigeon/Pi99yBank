@@ -37,4 +37,9 @@ public class UserService implements HanaService<Long, UserDto> {
     public List<UserDto> get() throws Exception {
         return userRepository.select();
     }
+
+    @Override
+    public int reset() throws Exception {
+        return userRepository.reset();
+    }
 }

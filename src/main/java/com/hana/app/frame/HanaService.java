@@ -12,4 +12,5 @@ public interface HanaService<K, V> {
     int modify(V v) throws Exception;
     V get(K k) throws Exception;
     List<V> get() throws Exception;
+    int reset() throws Exception;
 }
