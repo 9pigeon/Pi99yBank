@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//KO"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.DepositOptionRepository">
+
+    <delete id="reset">
+        TRUNCATE depositOption
+    </delete>
+
+    <insert id="insert" parameterType="depositOptionDto">
+        INSERT INTO depositOption VALUES (#{finPrdtCd},#{intrRateType},#{saveTrm},#{intrRate},#{intrRate2})
+    </insert>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//KO"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.SavingKeywordRepository">
+
+    <delete id="reset">
+        TRUNCATE savingKeyword
+    </delete>
+
+    <insert id="insert" parameterType="savingKeywordDto">
+        INSERT INTO savingKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
+    </insert>
+
+
+
+</mapper>

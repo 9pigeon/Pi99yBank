@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hana.app.repository.DepositRepository">
 
+    <sql id="reset">
+        TRUNCATE depositProduct
+    </sql>
+
     <select id="selectOne" parameterType="String" resultType="depositDto">
         SELECT * FROM depositProduct WHERE fin_prdt_cd=#{id}
     </select>
