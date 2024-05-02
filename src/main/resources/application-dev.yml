@@ -13,9 +13,9 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/pi99ydb?characterEncoding=utf8&serverTimezone=Asia/Seoul
-    username: pi99y
-    password: 123123
+    url: ENC(mRX3U5bo/Wmf16qhNr16sRhR75IksxJedvXdA/L2Wpm/yw9WR2PeTOx/H4ILbvRm9QYrcNhb5xFQ1+++2yzc17xP7HF6xV0ddWSu5CJxYJuI1gyMf23lqLAQ/V0YGCRbwAQBMQ0fJXY=)
+    username: ENC(rqu4ZgOWl8dR9mRztzCPHw==)
+    password: ENC(ld3qcrN986OL7IlWWDlgZ+69r+JppCls)
 mybatis:
   type-aliases-package: com.hana.app.data
   mapper-locations: classpath:/mapper/*.xml

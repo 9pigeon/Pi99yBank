@@ -43,4 +43,9 @@ public class DepositKeywordService implements HanaService<DepositKeywordPKDto, D
         return depositKeywordRepository.select();
     }
 
+    @Override
+    public int reset() throws Exception {
+        return 0;
+    }
+
 }
