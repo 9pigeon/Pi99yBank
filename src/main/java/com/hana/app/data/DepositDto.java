@@ -21,7 +21,7 @@ public class DepositDto {
     private String joinDeny;
     private String joinMember;
     private String etcNote;
-    private int maxLimit;
+    private Long maxLimit;
     private String dclsStrtDay;
     private String dclsEndDay;
     private String finCoSubmDay;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//KO"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.DepositKeywordRepository">
+
+    <select id="selectOne" parameterType="depositKeywordPKDto" resultType="depositKeywordDto">
+        SELECT * FROM depositKeyword WHERE product_id=#{productId}
+    </select>
+    <select id="select" resultType="depositDto">
+        SELECT * FROM depositKeyword
+    </select>
+    <insert id="insert" parameterType="depositDto">
+        INSERT INTO depositKeyword VALUES (#{pk.productId},#{pk.termId},#{termClass},#{termContent},#{termRate})
+    </insert>
+    <update id="update" parameterType="depositKeywordDto">
+            UPDATE depositKeyword
+            SET term_class = #{termClass},
+                term_content = #{termContent},
+                term_rate = #{termRate}
+            WHERE product_id = #{pk.productId} AND term_id = #{pk.termId}
+    </update>
+    <delete id="delete" parameterType="depositKeywordPKDto">
+        DELETE FROM depositKeyword WHERE product_id=#{productId} and term_id=#{termId}
+    </delete>
+
+</mapper>
