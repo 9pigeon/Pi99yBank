@@ -41,7 +41,7 @@ public class DataUtil {
     DepositService depositService;
 
     @Autowired
-    DepositKewordService depositKewordService;
+    DepositKeywordService depositKeywordService;
 
     @Autowired
     DepositOptionService depositOptionService;
@@ -140,7 +140,7 @@ public class DataUtil {
         JSONArray baseList = (JSONArray) result.get("baseList");
         if(baseList.size()>0){
             depositService.reset();
-            depositKewordService.reset();
+            depositKeywordService.reset();
             depositOptionService.reset();
         }
         for (int i=0;i<baseList.size();i++){
