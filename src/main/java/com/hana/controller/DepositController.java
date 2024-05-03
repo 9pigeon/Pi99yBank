@@ -35,5 +35,15 @@ public class DepositController {
         return dtolist;
     }
 
-
+    @ResponseBody
+    @RequestMapping("/all")
+    public List<DepositDto> all() {
+        List<DepositDto> all = null;
+        try {
+            all = depositService.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return all;
+    }
 }
