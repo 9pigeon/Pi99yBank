@@ -6,6 +6,7 @@ import com.hana.app.frame.HanaService;
 import com.hana.app.repository.DepositKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class DepositKeywordService implements HanaService<DepositKeywordPKDto, DepositKeywordDto> {
-
-    final DepositKeywordRepository depositKeywordRepository;
+    @Autowired
+    DepositKeywordRepository depositKeywordRepository;
 
 
     @Override
     public int add(DepositKeywordDto depositKeywordDto) throws Exception {
+        log.info(depositKeywordDto.toString());
         return depositKeywordRepository.insert(depositKeywordDto);
     }
 

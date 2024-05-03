@@ -92,7 +92,8 @@ public class DataKeywordUtil {
                     .build();
 
             DepositKeywordDto depositKeywordDto = DepositKeywordDto.builder()
-                    .depositKeywordPK(pkDto)
+                    .productId(productId)
+                    .termId(Integer.parseInt(termId))
                     .termClass(Integer.parseInt(termClass))
                     .termContent(termContent)
                     .termRate(Float.parseFloat(termRate))

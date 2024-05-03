@@ -164,6 +164,11 @@ public class DataUtil {
                     .build();
             deopsits.add(depositDto);
             depositService.add(depositDto);
+            List<DepositKeywordDto> depositKeywords =  DataKeywordUtil.toKeywordDtoList(depositDto);
+            for (int j=0;j<depositKeywords.size();j++){
+                log.info(depositKeywords.get(j).toString());
+                depositKeywordService.add(depositKeywords.get(j));
+            }
         }
         JSONArray optionList = (JSONArray) result.get("optionList");
         for (int i=0;i<optionList.size();i++){
