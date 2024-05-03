@@ -32,10 +32,11 @@
         // li 요소를 클릭했을 때
     let checkbox = {
         click : function () {
-            $('.ProductButtonBoxFilter_item__RIt_0').click(function () {
+            $('.ProductButtonBoxFilter_label__OOSMj').click(function () {
+                console.log($(this));
                 // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
                 $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
-
+                console.log($(this))
                 // 체크된 체크박스의 값을 업데이트합니다.
                 checkbox.update();
             });
@@ -45,55 +46,64 @@
             let checkedValues = []; // 배열 초기화
 
             // 모든 체크박스를 선택합니다.
-            $('.ProductButtonBoxFilter_item__RIt_0 input[type="checkbox"]').each(function () {
-                // 체크박스가 체크되어 있는지 확인합니다.
-                if ($(this).is(':checked')) {
-                    // 체크된 체크박스의 값을 가져와서 배열에 추가합니다.
-                    var values = $(this).val(); // 해당 체크박스의 value값을 가져옵니다.
-                    checkedValues.push(values);
+            $('.ProductButtonBoxFilter_label__OOSMj').each(function () {
+                // 체크박스가 체크된 상태라면
+                if ($(this).hasClass('ProductButtonBoxFilter_is-checked__OueIY')) {
+                    // 체크된 체크박스의 값을 checkedValues 배열에 추가합니다.
+                    checkedValues.push($(this).parent().find('input').val());
                 }
             });
 
             // 체크된 값들을 출력합니다.
-            console.log("체크된 값들:", checkedValues);
-            if(checkedValues.length > 0){
                 checkbox.get(checkedValues);
-
-            }
-
+        },
+        draw: function(products){
+            var dynamicHTML = '';
+            products.forEach(function(product) {
+                dynamicHTML += '<li class="ProductList_item__QXNrf">';
+                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
+                dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
+                dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
+                dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
+                dynamicHTML += '<img src='+product.imgUrl+' alt="' + product.finPrdtCd + '" width="42" height="42" loading="eager">';
+                dynamicHTML += '</span></span>';
+                dynamicHTML += '<div class="ProductInfo_area-info__LPXq9">';
+                dynamicHTML += '<div class="ProductInfo_info-text__3Bv24">';
+                dynamicHTML += '<div class="ProductInfo_title-box__rhHbP">';
+                dynamicHTML += '<strong class="ProductInfo_title__tomzd">' + product.finPrdtNm + '</strong>';
+                dynamicHTML += '</div>';
+                dynamicHTML += '<p class="ProductInfo_bank-name__UNj3m">' + product.korCoNm + '</p>';
+                dynamicHTML += '</div>';
+                dynamicHTML += '<div class="ProductInfo_info-rates__h8fgP">';
+                dynamicHTML += '<em class="ProductInfo_top-rate__JKyeA">최고 <b class="ProductInfo_number__KjJso">'+product.bestIntr+'</b><span class="ProductInfo_percent__3571f">%</span></em>';
+                dynamicHTML += '<span class="ProductInfo_rate__ruWXq"> 기본'+product.basicIntr+'%</span>';
+                dynamicHTML += '</div></div></div></a></li>';
+            });
+            $('.ProductListHeader_highlight__V_U8l').html(products.length);
+            $('#depositList').html(dynamicHTML);
+            return dynamicHTML;
         },
         get : function(checkedValues){
-            console.log(checkedValues);
-
+            if(checkedValues.length==0){
+                $.ajax({
+                    url:'/deposit/all',
+                    success: function(res){
+                        checkbox.draw(res)
+                    }
+                })
+                return;
+            }
             $.ajax({
                 url: '/deposit/benefit',
                 data: {"termclassList": checkedValues},
                 success: function (res) {
                     console.log(res)
-                    var dynamicHTML = '';
-                    res.forEach(function(product) {
-                        dynamicHTML += '<li class="ProductList_item__QXNrf">';
-                        dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
-                        dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
-                        dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
-                        dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
-                        dynamicHTML += '<img src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_SHINHAN_Profile.png" alt="' + product.finPrdtCd + '" width="42" height="42" loading="eager">';
-                        dynamicHTML += '</span></span>';
-                        dynamicHTML += '<div class="ProductInfo_area-info__LPXq9">';
-                        dynamicHTML += '<div class="ProductInfo_info-text__3Bv24">';
-                        dynamicHTML += '<div class="ProductInfo_title-box__rhHbP">';
-                        dynamicHTML += '<strong class="ProductInfo_title__tomzd">' + product.finPrdtNm + '</strong>';
-                        dynamicHTML += '</div>';
-                        dynamicHTML += '<p class="ProductInfo_bank-name__UNj3m">' + product.korCoNm + '</p>';
-                        dynamicHTML += '</div>';
-                        dynamicHTML += '<div class="ProductInfo_info-rates__h8fgP">';
-                        dynamicHTML += '<em class="ProductInfo_top-rate__JKyeA">최고 <b class="ProductInfo_number__KjJso">'+product.bestIntr+'</b><span class="ProductInfo_percent__3571f">%</span></em>';
-                        dynamicHTML += '<span class="ProductInfo_rate__ruWXq">'+product.basicIntr+'%</span>';
-                        dynamicHTML += '</div></div></div></a></li>';
-                    });
-
-                    // 동적 생성된 HTML 코드를 원하는 위치에 삽입
-                    $('#depositList').html(dynamicHTML);
+                    if (res.length === 0) {
+                        $('#depositList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
+                        $('.ProductListHeader_highlight__V_U8l').html(res.length);
+                        return;
+                    }
+                    checkbox.draw(res);
                 },
                 error: function () {
                     console.log(e);
@@ -307,7 +317,7 @@
                                     최고 <b class="ProductInfo_number__KjJso">${product.bestIntr}</b>
                                     <span class="ProductInfo_percent__3571f">%</span>
                                 </em>
-                                <span class="ProductInfo_rate__ruWXq">기본 금리${String.format("%.2f",product.basicIntr)}%</span>
+                                <span class="ProductInfo_rate__ruWXq">기본${String.format("%.2f",product.basicIntr)}%</span>
                             </div>
                         </div>
                             <%--                            <ul class="TagList_article__gRL9O ProductInfo_area-tag__6a4Nt">--%>
