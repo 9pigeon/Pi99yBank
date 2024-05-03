@@ -5,21 +5,18 @@
 
 <mapper namespace="com.hana.app.repository.DepositKeywordRepository">
 
-    <select id="selectOne" parameterType="depositKeywordPKDto" resultType="depositKeywordDto">
-        SELECT * FROM depositKeyword WHERE product_id=#{productId}
+    <select id="selectOne" parameterType="depositKeywordDto" resultType="depositKeywordDto">
+        SELECT * FROM depositKeyword WHERE product_id=#{productId} and term_id=#{termId}
     </select>
     <select id="select" resultType="depositDto">
         SELECT * FROM depositKeyword
     </select>
-    <insert id="insert" parameterType="depositDto">
-        INSERT INTO depositKeyword VALUES (#{pk.productId},#{pk.termId},#{termClass},#{termContent},#{termRate})
-    </insert>
     <update id="update" parameterType="depositKeywordDto">
             UPDATE depositKeyword
             SET term_class = #{termClass},
                 term_content = #{termContent},
                 term_rate = #{termRate}
-            WHERE product_id = #{pk.productId} AND term_id = #{pk.termId}
+            WHERE product_id = #{productId} AND term_id = #{termId}
     </update>
     <delete id="delete" parameterType="depositKeywordPKDto">
         DELETE FROM depositKeyword WHERE product_id=#{productId} and term_id=#{termId}
@@ -30,7 +27,7 @@
     </delete>
 
     <insert id="insert" parameterType="depositKeywordDto">
-        INSERT INTO depositKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
+    INSERT INTO depositKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
     </insert>
 
 </mapper>

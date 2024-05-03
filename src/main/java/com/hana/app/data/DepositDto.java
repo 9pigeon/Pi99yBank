@@ -27,4 +27,7 @@ public class DepositDto {
     private String dclsStrtDay;
     private String dclsEndDay;
     private String finCoSubmDay;
+    private double basicIntr;
+    private double bestIntr;
+    private String imgUrl;
 }
