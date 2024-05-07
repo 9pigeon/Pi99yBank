@@ -1,5 +1,6 @@
 package com.hana.app.service;
 
+import com.hana.app.data.DepositOptionDto;
 import com.hana.app.data.SavingOptionDto;
 import com.hana.app.frame.HanaService;
 import com.hana.app.repository.SavingOptionRepository;
@@ -41,5 +42,9 @@ public class SavingOptionService implements HanaService<String, SavingOptionDto>
     @Override
     public int reset() throws Exception {
         return savingOptionRepository.reset();
+    }
+
+    public List<SavingOptionDto> getIntr(String fpc) throws Exception {
+        return savingOptionRepository.getIntr(fpc);
     }
 }

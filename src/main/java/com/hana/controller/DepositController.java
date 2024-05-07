@@ -46,7 +46,6 @@ public class DepositController {
         }
         return all;
     }
-
     @RequestMapping("/detail")
     public String detail(@RequestParam("fpc") String fpc, Model model) {
         List<DepositOptionDto> options = null;
@@ -61,5 +60,16 @@ public class DepositController {
             throw new RuntimeException(e);
         }
         return "detail";
+    }
+    @ResponseBody
+    @RequestMapping("/recommend")
+    public List<DepositDto> recommend(@RequestParam("similar") String[] similar) {
+        List<DepositDto> all = null;
+        try {
+            all = depositService.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return all;
     }
 }
