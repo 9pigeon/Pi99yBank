@@ -28,10 +28,6 @@ public class MainController {
     }
     @RequestMapping("/main")
     public String main(Model model) throws Exception {
-        List<DepositDto> all = null;
-        all = depositService.get();
-        log.info("all: " + all.toString());
-        model.addAttribute("all", all);
         return "main";
     }
 }

@@ -29,14 +29,19 @@
 
 
     });
+    let type = 'deposit'
+    let now = []
+    let sortby = 'bestIntr'
+    let productSort = function () {
+        now.sort((a, b) => b[sortby] - a[sortby])
+        checkbox.draw(now)
+    }
         // li 요소를 클릭했을 때
     let checkbox = {
         click : function () {
             $('.ProductButtonBoxFilter_label__OOSMj').click(function () {
-                console.log($(this));
                 // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
                 $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
-                console.log($(this))
                 // 체크된 체크박스의 값을 업데이트합니다.
                 checkbox.update();
             });
@@ -88,7 +93,9 @@
                 $.ajax({
                     url:'/deposit/all',
                     success: function(res){
-                        checkbox.draw(res)
+                        now= res;
+                        productSort()
+                        checkbox.draw(now)
                     }
                 })
                 return;
@@ -97,15 +104,16 @@
                 url: '/deposit/benefit',
                 data: {"termclassList": checkedValues},
                 success: function (res) {
-                    console.log(res)
                     if (res.length === 0) {
                         $('#depositList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
                         $('.ProductListHeader_highlight__V_U8l').html(res.length);
                         return;
                     }
-                    checkbox.draw(res);
+                    now = res;
+                    productSort()
+                    checkbox.draw(now)
                 },
-                error: function () {
+                error: function (e) {
                     console.log(e);
                 }
             });
@@ -114,8 +122,22 @@
 
   $(function (){
       checkbox.click();
+      checkbox.update();
+      $('.LineTab-module_link__MCdtL').click(function(){
+          type = $(this).data('type');
+          $.ajax({
+              url: '/'+type+'/all',
+              success: function(res){
+                  now = res;
+                  productSort()
+                  checkbox.draw(now)
+              }
+          })
+      })
   })
 </script>
+<script src="https://financial.pstatic.net/savings/_next/static/chunks/2c27f6e1-3ea448d62dcba154.js"></script>
+<script src="https://financial.pstatic.net/savings/_next/static/chunks/pages/detail/%5BproductCode%5D-66d92cc6917edbdf.js"></script>
 <div class="ProductFilterSection_article__0nJDV">
     <ul>
         <li data-nclicks="deposit.benefit" class="ProductFilter_item__PhP2B">
@@ -279,8 +301,6 @@
         </svg>
         <span class="blind">검색어 초기화</span></button>
 </div>
-
-
 <div class="ProductListSection_article__kDyT3"><h3 class="blind">은행상품 목록</h3>
     <div class="ProductListHeader_area-filter-info__9YO5n"><strong
             class="ProductListHeader_count__xQGto"><span
@@ -295,40 +315,6 @@
         </div>
     </div>
     <ul id="depositList">
-        <c:forEach items="${all}" var="product">
-            <li class="ProductList_item__QXNrf">
-                    <%--                    --%>
-                <a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">
-                    <div class="ProductInfo_article__HX1ob">
-                <span class="ProductInfo_bi-circle__ngPKu">
-                    <span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">
-                        <img src="${product.imgUrl}" alt="${product.finPrdtCd}" width="42" height="42" loading="eager">
-                    </span>
-                </span>
-                        <div class="ProductInfo_area-info__LPXq9">
-                            <div class="ProductInfo_info-text__3Bv24">
-                                <div class="ProductInfo_title-box__rhHbP">
-                                    <strong class="ProductInfo_title__tomzd">${product.finPrdtNm}</strong>
-                                </div>
-                                <p class="ProductInfo_bank-name__UNj3m">${product.korCoNm}</p>
-                            </div>
-                            <div class="ProductInfo_info-rates__h8fgP">
-                                <em class="ProductInfo_top-rate__JKyeA">
-                                    최고 <b class="ProductInfo_number__KjJso">${product.bestIntr}</b>
-                                    <span class="ProductInfo_percent__3571f">%</span>
-                                </em>
-                                <span class="ProductInfo_rate__ruWXq">기본${String.format("%.2f",product.basicIntr)}%</span>
-                            </div>
-                        </div>
-                            <%--                            <ul class="TagList_article__gRL9O ProductInfo_area-tag__6a4Nt">--%>
-                            <%--                                <c:forEach items="${product.tags}" var="tag">--%>
-                            <%--                                    <li class="TagList_tag__xQBbK">${tag}</li>--%>
-                            <%--                                </c:forEach>--%>
-                            <%--                            </ul>--%>
-                    </div>
-                </a>
-            </li>
-        </c:forEach>
     </ul>
     <div class="Pagination_article__Rg8y3">
         <ul class="Pagination_list__XfpSy">
@@ -364,6 +350,4 @@
         </div>
     </div>
 </div>
-</div>
-<script src="https://financial.pstatic.net/savings/_next/static/chunks/2c27f6e1-3ea448d62dcba154.js"></script>
-<script src="https://financial.pstatic.net/savings/_next/static/chunks/pages/detail/%5BproductCode%5D-66d92cc6917edbdf.js"></script>
+
