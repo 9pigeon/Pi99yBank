@@ -19,11 +19,13 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script>
     let fpc = '${depositDetail.finPrdtCd}';
-
+    let path = window.location.pathname.split("/");
+    let type = path[1];
+    // console.log(type);
     $(document).ready(function () {
         console.log(fpc);
         $.ajax({
-            url:'http://54.180.142.213:5000/recommendation?target_fin_prdt_cd=' + fpc +'&rownum=3&type=deposit',
+            url:'http://54.180.142.213:5000/recommendation?target_fin_prdt_cd=' + fpc +'&rownum=3&type='+ type,
             success:function(data){
                 console.log(data["similar_products"]);
                 recommendation.info(data["similar_products"]);
@@ -36,10 +38,11 @@
 
     let recommendation = {
         info:function(rec){
-
+            var recurl = "/" + type + "/recommend";
+            console.log(recurl);
             $.ajax({
                 method:'POST',
-                url:'<c:url value="/saving/recommend"/>',
+                url:"/" + type + "/recommend",
                 data:{arr:rec},
                 success:function (res){
                     var dynamicHTML = '';
