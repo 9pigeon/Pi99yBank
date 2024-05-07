@@ -44,4 +44,8 @@ public class DepositOptionService implements HanaService<String, DepositOptionDt
     public int reset() throws Exception {
         return depositOptionRepository.reset();
     }
+
+    public List<DepositOptionDto> getIntr(String fpc) throws Exception {
+        return depositOptionRepository.getIntr(fpc);
+    }
 }

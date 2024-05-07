@@ -18,7 +18,7 @@ public class DataUtilTest {
     @Test
 
     void contextLoads() throws Exception {
-//        log.info(dataUtil.getSavings().toString());
+        log.info(dataUtil.getSavings().toString());
         log.info(dataUtil.getDeposits().toString());
     }
 }

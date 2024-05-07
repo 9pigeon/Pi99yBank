@@ -1,4 +1,5 @@
 package com.hana.app.service;
+import com.hana.app.data.DepositDto;
 import com.hana.app.frame.HanaService;
 import com.hana.app.repository.SavingRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,10 @@ public class SavingService implements HanaService<String, SavingDto>{
     @Override
     public SavingDto get(String id) throws Exception {
         return savingRepository.selectOne(id);
+    }
+
+    public List<SavingDto> getSavingList(int[] termclassList) throws Exception {
+        return savingRepository.getSavingList(termclassList);
     }
 
     @Override

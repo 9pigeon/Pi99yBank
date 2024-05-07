@@ -71,13 +71,6 @@
                 <li><a href="http://127.0.0.1:5500/index.html">민원 접수</a></li>
             </ul>
         </div>
-        <div class="footer_imgcontainer">
-            <a href="http://127.0.0.1:5500/index.html"><img src="/asset/safety/icn-facebook.svg" alt="facebook"></a>
-            <a href="http://127.0.0.1:5500/index.html"><img src="/asset/safety/icn-blog.svg" alt="blog"></a>
-            <a href="http://127.0.0.1:5500/index.html"><img src="/asset/safety/icn-naver.svg" alt="naver"></a>
-            <a href="http://127.0.0.1:5500/index.html"><img src="/asset/safety/icn-twitter.svg" alt="twitter"></a>
-            <a href="http://127.0.0.1:5500/index.html"><img src="/asset/safety/icn-instagram.svg" alt="instagram"></a>
-        </div>
 
 
     </div>
