@@ -43,7 +43,7 @@
         now.sort((a, b) => b[sortby] - a[sortby])
         checkbox.draw(now)
     }
-    let type='예금'
+    let type='deposit'
     // li 요소를 클릭했을 때
     let checkbox = {
         click : function () {
@@ -74,7 +74,7 @@
             var dynamicHTML = '';
             products.forEach(function(product) {
                 dynamicHTML += '<li class="ProductList_item__QXNrf">';
-                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
+                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="/'+type+'/detail?fpc='+ product.finPrdtCd+'">';
                 dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
                 dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
                 dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
@@ -97,7 +97,7 @@
             return dynamicHTML;
         },
         get : function(checkedValues){
-            if(type=='예금')
+            if(type=='deposit')
             {
                 if(checkedValues.length==0){
                     $.ajax({
@@ -171,7 +171,7 @@
             }
             $('.LineTab-module_is-selected__Uty3h').removeClass('LineTab-module_is-selected__Uty3h')
             $(this).addClass('LineTab-module_is-selected__Uty3h')
-            type = $(this).text()
+            type = $(this).text()=='예금'?'deposit':'saving'
             checkbox.update();
         })
         $('.ProductListHeader_button-select___A4vQ').click(function(){

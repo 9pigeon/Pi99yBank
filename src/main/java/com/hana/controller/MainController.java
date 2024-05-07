@@ -30,4 +30,5 @@ public class MainController {
     public String main(Model model) throws Exception {
         return "main";
     }
+
 }

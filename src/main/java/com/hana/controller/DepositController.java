@@ -1,6 +1,8 @@
 package com.hana.controller;
 
 import com.hana.app.data.DepositDto;
+import com.hana.app.data.DepositOptionDto;
+import com.hana.app.service.DepositOptionService;
 import com.hana.app.service.DepositService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepositController {
     final DepositService depositService;
+    final DepositOptionService depositOptionService;
 
     @RequestMapping("/benefit")
     @ResponseBody
@@ -45,5 +48,21 @@ public class DepositController {
             throw new RuntimeException(e);
         }
         return all;
+    }
+
+    @RequestMapping("/detail")
+    public String detail(@RequestParam("fpc") String fpc, Model model) {
+        List<DepositOptionDto> options = null;
+        DepositDto dto = null;
+        try {
+            dto = depositService.get(fpc);
+            model.addAttribute("depositDetail", dto);
+
+            options = depositOptionService.getIntr(fpc);
+            model.addAttribute("options", options);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "detail";
     }
 }

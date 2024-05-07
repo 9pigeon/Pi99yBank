@@ -12,4 +12,7 @@
         INSERT INTO depositOption VALUES (#{finPrdtCd},#{intrRateType},#{saveTrm},#{intrRate},#{intrRate2})
     </insert>
 
+    <select id="getIntr" parameterType="String" resultType="depositOptionDto">
+        SELECT * FROM depositOption WHERE fin_prdt_cd=#{id}  ORDER BY convert(save_trm, UNSIGNED)
+    </select>
 </mapper>
