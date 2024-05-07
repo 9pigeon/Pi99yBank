@@ -27,5 +27,7 @@ public class SavingDto {
     private String dclsStrtDay;
     private String dclsEndDay;
     private String finCoSubmDay;
-    private List optionList;
+    private double basicIntr;
+    private double bestIntr;
+    private String imgUrl;
 }

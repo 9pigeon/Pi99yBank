@@ -17,7 +17,7 @@
                     <div>
                         <header class="CommonHeader-module_article__sFY73 CommonHeader-module_left__lnT7u">
                             <div class="CommonHeader-module_inner__CNjq5">
-                                <h1><a data-nclicks="navi.gnbnlogo" href="https://naver.com/"
+                                <h1><a data-nclicks="navi.gnbnlogo" href="<c:url value="/"/>"
                                        class="HeaderNpayButton-module_link__dCMvi">
                                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -25,14 +25,14 @@
                                               fill="black"></path>
                                     </svg>
                                     <span class="blind">네이버</span></a><a data-nclicks="navi.gnbplogo"
-                                                                         href="https://new-m.pay.naver.com/mydata/home"
+                                                                         href="<c:url value="/"/>"
                                                                          class="HeaderNpayButton-module_link__dCMvi">
                                     <svg width="39" height="22" viewBox="0 0 39 22" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path d="M34.4319 5.21944L31.3913 12.1478L27.9518 5.21944H25.3072L30.1783 14.8317L28.1703 19.3358H30.7384L37 5.2331L34.4319 5.21944ZM23.6171 15.9331H21.1037V14.9328C20.1894 15.7342 19.0108 16.1685 17.7953 16.1518C14.7901 16.1518 12.4379 13.692 12.4379 10.5763C12.4379 7.46057 14.7874 5.00079 17.7953 5.00079C19.0104 4.9833 20.189 5.41657 21.1037 6.21701V5.21944H23.6171V15.9331ZM21.3987 10.5899C21.3987 8.57019 19.9891 7.03694 18.1204 7.03694C16.2517 7.03694 14.842 8.57019 14.842 10.5899C14.842 12.6097 16.249 14.1429 18.1204 14.1429C19.9918 14.1429 21.3987 12.596 21.3987 10.5899ZM0.00819554 19.3358H2.63088V15.023C3.52823 15.7695 4.66309 16.1699 5.83001 16.1518C8.83516 16.1518 11.1901 13.692 11.1901 10.5763C11.1901 7.46057 8.83789 5.00079 5.83001 5.00079C4.61166 4.9789 3.42899 5.4126 2.51341 6.21701V5.21944H0L0.00819554 19.3358ZM5.51856 7.03694C7.38722 7.03694 8.79691 8.57019 8.79691 10.5899C8.79691 12.6097 7.38722 14.1429 5.51856 14.1429C3.6499 14.1429 2.24021 12.6097 2.24021 10.5899C2.24021 8.57019 3.63351 7.03694 5.51856 7.03694Z"
                                               fill="black"></path>
                                     </svg>
-                                    <span class="blind">네이버 페이</span></a><a href="/finance"
+                                    <span class="blind">네이버 페이</span></a><a href="<c:url value="/"/>"
                                                                             class="HeaderName-module_article__-dT0a"
                                                                             data-nclicks="navi.gnbplogo">
                                     <svg width="37" height="22" viewBox="0 0 37 22" fill="none"
@@ -79,11 +79,11 @@
                             <ul class="LineTab-module_list__hJZ3g LineTab-module_main__Hebbk LineTab-module_flexible__svdK1 LineTab-module_max-width-basic__bz406">
                                 <li class="LineTab-module_item__Q0W6v"><a
                                         class="LineTab-module_link__MCdtL LineTab-module_is-selected__Uty3h"
-                                        data-nclicks="navi.Inbsavings" href="<c:url value="/"/>"><span>예금</span><span
+                                        data-nclicks="navi.Inbsavings" href="<c:url value="/main"/>"><span>예금</span><span
                                         class="blind">현재 위치</span></a></li>
                                 <li class="LineTab-module_item__Q0W6v"><a
                                         class="LineTab-module_link__MCdtL"
-                                        data-nclicks="navi.Inbsavings" href="<c:url value="/"/>"><span>적금</span><span
+                                        data-nclicks="navi.Inbsavings" href="<c:url value="/saving"/>"><span>적금</span><span
                                         class="blind">현재 위치</span></a></li>
                                 <li class="LineTab-module_item__Q0W6v"><a class="LineTab-module_link__MCdtL"
                                                                           data-nclicks="navi.Inbloan"
@@ -493,7 +493,7 @@
 
 
                 <c:choose>
-                    <c:when test="${product == null}">
+                    <c:when test="${mainCenter == null}">
                         <jsp:include page="deposit.jsp"/>
                     </c:when>
                     <c:otherwise>

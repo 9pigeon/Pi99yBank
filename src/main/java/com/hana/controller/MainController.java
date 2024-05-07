@@ -1,8 +1,10 @@
 package com.hana.controller;
 
 import com.hana.app.data.DepositDto;
+import com.hana.app.data.SavingDto;
 import com.hana.app.service.DepositService;
 import com.hana.app.service.KakaoService;
+import com.hana.app.service.SavingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
     private final KakaoService kakaoService;
+    final SavingService savingService;
 
     @Autowired
     DepositService depositService;
+
     @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("center", "indexCenter");
@@ -32,6 +36,15 @@ public class MainController {
         all = depositService.get();
         log.info("all: " + all.toString());
         model.addAttribute("all", all);
+        return "main";
+    }
+    @RequestMapping("/saving")
+    public String saving(Model model) throws Exception {
+        List<SavingDto> all = null;
+        all = savingService.get();
+        log.info("savingList: " + all.toString());
+        model.addAttribute("all", all);
+//        model.addAttribute("mainCenter", "saving");
         return "main";
     }
 }

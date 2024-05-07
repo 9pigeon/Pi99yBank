@@ -7,12 +7,28 @@
     <delete id="reset">
         TRUNCATE savingProduct
     </delete>
-
+    <select id="getSavingList" parameterType="int[]" resultType="savingDto">
+        SELECT distinct p.*,I.basic_intr,I.best_intr,fin_co_info.img_url
+        FROM savingProduct AS p
+        JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr from savingOption
+        GROUP BY fin_prdt_cd) AS I ON p.fin_prdt_cd = I.fin_prdt_cd
+        JOIN fin_co_info ON p.fin_co_no = fin_co_info.fin_co_no
+        JOIN savingKeyword AS k ON p.fin_prdt_cd = k.product_id
+        WHERE k.term_class IN
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
     <select id="selectOne" parameterType="String" resultType="savingDto">
         SELECT * FROM savingProduct WHERE fin_prdt_cd=#{id}
     </select>
     <select id="select" resultType="savingDto">
-        SELECT * FROM savingProduct
+        SELECT P.*, I.basic_intr, I.best_intr, fin_co_info.img_url
+        FROM savingProduct as P
+                 JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr
+                       from savingOption
+                       GROUP BY fin_prdt_cd) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
+                 JOIN fin_co_info ON P.fin_co_no = fin_co_info.fin_co_no
     </select>
     <insert id="insert" parameterType="savingDto">
         INSERT INTO savingProduct VALUES (#{finPrdtCd},#{dclsMonth},#{finCoNo},#{korCoNm},#{finPrdtNm},#{joinWay},#{mtrtInt},#{spclCnd},#{joinDeny},#{joinMember},#{etcNote},#{maxLimit},#{dclsStrtDay},#{dclsEndDay},#{finCoSubmDay})

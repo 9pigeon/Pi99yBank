@@ -1,11 +1,11 @@
 package com.hana.controller;
 
 import com.hana.app.data.DepositDto;
-import com.hana.app.service.DepositService;
+import com.hana.app.data.SavingDto;
+import com.hana.app.service.SavingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("/deposit")
+@RequestMapping("/saving")
 @Slf4j
 @RequiredArgsConstructor
-public class DepositController {
-    final DepositService depositService;
+public class SavingController {
+    final SavingService savingService;
 
     @RequestMapping("/benefit")
     @ResponseBody
-    public List<DepositDto> benefit(@RequestParam("termclassList") int[] termclassList){
-        List<DepositDto> dtolist = null;
+    public List<SavingDto> benefit(@RequestParam("termclassList") int[] termclassList){
+        List<SavingDto> dtolist = null;
         try {
-            dtolist = depositService.getDepositList(termclassList);
+            dtolist = savingService.getSavingList(termclassList);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -34,10 +34,10 @@ public class DepositController {
 
     @ResponseBody
     @RequestMapping("/all")
-    public List<DepositDto> all() {
-        List<DepositDto> all = null;
+    public List<SavingDto> all() {
+        List<SavingDto> all = null;
         try {
-            all = depositService.get();
+            all = savingService.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
