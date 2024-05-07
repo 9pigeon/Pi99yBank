@@ -42,6 +42,9 @@ public class SavingService implements HanaService<String, SavingDto>{
         return savingRepository.select();
     }
 
+    public List<SavingDto> recSavingList(String[] similarList) throws Exception {
+        return savingRepository.recSavingList(similarList);
+    }
     @Override
     public int reset() throws Exception {
         return savingRepository.reset();

@@ -11,5 +11,6 @@ import java.util.List;
 @Mapper
 public interface DepositRepository extends HanaRepository<String, DepositDto> {
     List<DepositDto> getDepositList(int[] termclassList);
+    List<DepositDto> recDepositList(String[] similarList);
 
 }
