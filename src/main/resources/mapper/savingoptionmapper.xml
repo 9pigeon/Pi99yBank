@@ -8,8 +8,10 @@
         TRUNCATE savingOption
     </delete>
 
-    <insert id="insert" parameterType="depositOptionDto">
+    <insert id="insert" parameterType="savingOptionDto">
         INSERT INTO savingOption VALUES (#{finPrdtCd},#{intrRateType},#{rsrvType},#{saveTrm},#{intrRate},#{intrRate2})
     </insert>
-
+    <select id="getIntr" parameterType="String" resultType="savingOptionDto">
+        SELECT * FROM savingOption WHERE fin_prdt_cd=#{id}  ORDER BY convert(save_trm, UNSIGNED)
+    </select>
 </mapper>
