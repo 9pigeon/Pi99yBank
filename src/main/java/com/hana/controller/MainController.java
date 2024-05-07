@@ -43,8 +43,9 @@ public class MainController {
         List<SavingDto> all = null;
         all = savingService.get();
         log.info("savingList: " + all.toString());
-        model.addAttribute("all", all);
-//        model.addAttribute("mainCenter", "saving");
+        model.addAttribute("savingList", all);
+        model.addAttribute("mainCenter", "saving");
         return "main";
     }
+
 }

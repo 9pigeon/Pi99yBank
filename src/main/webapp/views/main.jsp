@@ -497,7 +497,7 @@
                         <jsp:include page="deposit.jsp"/>
                     </c:when>
                     <c:otherwise>
-                        <jsp:include page="deposit.jsp"/>
+                        <jsp:include page="${mainCenter}.jsp"/>
                     </c:otherwise>
                 </c:choose>
             </div>

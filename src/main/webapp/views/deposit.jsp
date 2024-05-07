@@ -61,7 +61,7 @@
             var dynamicHTML = '';
             products.forEach(function(product) {
                 dynamicHTML += '<li class="ProductList_item__QXNrf">';
-                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
+                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="/deposit/detail?fpc='+ product.finPrdtCd+'">';
                 dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
                 dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
                 dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
@@ -114,6 +114,7 @@
 
   $(function (){
       checkbox.click();
+      checkbox.update();
   })
 </script>
 <div class="ProductFilterSection_article__0nJDV">
@@ -295,40 +296,7 @@
         </div>
     </div>
     <ul id="depositList">
-        <c:forEach items="${all}" var="product">
-            <li class="ProductList_item__QXNrf">
-                    <%--                    --%>
-                <a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">
-                    <div class="ProductInfo_article__HX1ob">
-                <span class="ProductInfo_bi-circle__ngPKu">
-                    <span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">
-                        <img src="${product.imgUrl}" alt="${product.finPrdtCd}" width="42" height="42" loading="eager">
-                    </span>
-                </span>
-                        <div class="ProductInfo_area-info__LPXq9">
-                            <div class="ProductInfo_info-text__3Bv24">
-                                <div class="ProductInfo_title-box__rhHbP">
-                                    <strong class="ProductInfo_title__tomzd">${product.finPrdtNm}</strong>
-                                </div>
-                                <p class="ProductInfo_bank-name__UNj3m">${product.korCoNm}</p>
-                            </div>
-                            <div class="ProductInfo_info-rates__h8fgP">
-                                <em class="ProductInfo_top-rate__JKyeA">
-                                    최고 <b class="ProductInfo_number__KjJso">${product.bestIntr}</b>
-                                    <span class="ProductInfo_percent__3571f">%</span>
-                                </em>
-                                <span class="ProductInfo_rate__ruWXq">기본${String.format("%.2f",product.basicIntr)}%</span>
-                            </div>
-                        </div>
-                            <%--                            <ul class="TagList_article__gRL9O ProductInfo_area-tag__6a4Nt">--%>
-                            <%--                                <c:forEach items="${product.tags}" var="tag">--%>
-                            <%--                                    <li class="TagList_tag__xQBbK">${tag}</li>--%>
-                            <%--                                </c:forEach>--%>
-                            <%--                            </ul>--%>
-                    </div>
-                </a>
-            </li>
-        </c:forEach>
+<%--  상품 정보 출력하는 공간--%>
     </ul>
     <div class="Pagination_article__Rg8y3">
         <ul class="Pagination_list__XfpSy">
