@@ -4,25 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hana.app.repository.DepositRepository">
 
-    <sql id="reset">
+    <delete id="reset">
         TRUNCATE depositProduct
-    </sql>
+    </delete>
 
     <select id="selectOne" parameterType="String" resultType="depositDto">
         SELECT * FROM depositProduct WHERE fin_prdt_cd=#{id}
     </select>
     <select id="getDepositList" parameterType="int[]" resultType="depositDto">
-        SELECT p.fin_prdt_cd, p.kor_co_nm, p.fin_prdt_nm
+        SELECT distinct p.*,I.basic_intr,I.best_intr,fin_co_info.img_url
         FROM depositProduct AS p
+        JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr from depositOption
+        GROUP BY fin_prdt_cd) AS I ON p.fin_prdt_cd = I.fin_prdt_cd
+        JOIN fin_co_info ON p.fin_co_no = fin_co_info.fin_co_no
         JOIN depositKeyword AS k ON p.fin_prdt_cd = k.product_id
         WHERE k.term_class IN
         <foreach item="item" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
-        group by p.fin_prdt_cd;
     </select>
     <select id="select" resultType="depositDto">
-        SELECT * FROM depositProduct
+        SELECT P.*, I.basic_intr,I.best_intr,fin_co_info.img_url FROM depositProduct as P
+        JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr from depositOption
+              GROUP BY fin_prdt_cd) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
+        JOIN fin_co_info ON P.fin_co_no = fin_co_info.fin_co_no
     </select>
     <insert id="insert" parameterType="depositDto">
         INSERT INTO depositProduct VALUES (#{finPrdtCd},#{dclsMonth},#{finCoNo},#{korCoNm},#{finPrdtNm},#{joinWay},#{mtrtInt},#{spclCnd},#{joinDeny},#{joinMember},#{etcNote},#{maxLimit},#{dclsStrtDay},#{dclsEndDay},#{finCoSubmDay})

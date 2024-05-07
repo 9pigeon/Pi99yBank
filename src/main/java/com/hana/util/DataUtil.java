@@ -41,7 +41,7 @@ public class DataUtil {
     DepositService depositService;
 
     @Autowired
-    DepositKewordService depositKewordService;
+    DepositKeywordService depositKeywordService;
 
     @Autowired
     DepositOptionService depositOptionService;
@@ -140,7 +140,7 @@ public class DataUtil {
         JSONArray baseList = (JSONArray) result.get("baseList");
         if(baseList.size()>0){
             depositService.reset();
-            depositKewordService.reset();
+            depositKeywordService.reset();
             depositOptionService.reset();
         }
         for (int i=0;i<baseList.size();i++){
@@ -164,6 +164,11 @@ public class DataUtil {
                     .build();
             deopsits.add(depositDto);
             depositService.add(depositDto);
+            List<DepositKeywordDto> depositKeywords =  DataKeywordUtil.toKeywordDtoList(depositDto);
+            for (int j=0;j<depositKeywords.size();j++){
+                log.info(depositKeywords.get(j).toString());
+                depositKeywordService.add(depositKeywords.get(j));
+            }
         }
         JSONArray optionList = (JSONArray) result.get("optionList");
         for (int i=0;i<optionList.size();i++){

@@ -32,10 +32,11 @@
         // li 요소를 클릭했을 때
     let checkbox = {
         click : function () {
-            $('.ProductButtonBoxFilter_item__RIt_0').click(function () {
+            $('.ProductButtonBoxFilter_label__OOSMj').click(function () {
+                console.log($(this));
                 // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
                 $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
-
+                console.log($(this))
                 // 체크된 체크박스의 값을 업데이트합니다.
                 checkbox.update();
             });
@@ -45,54 +46,64 @@
             let checkedValues = []; // 배열 초기화
 
             // 모든 체크박스를 선택합니다.
-            $('.ProductButtonBoxFilter_item__RIt_0 input[type="checkbox"]').each(function () {
-                // 체크박스가 체크되어 있는지 확인합니다.
-                if ($(this).is(':checked')) {
-                    // 체크된 체크박스의 값을 가져와서 배열에 추가합니다.
-                    var values = $(this).val(); // 해당 체크박스의 value값을 가져옵니다.
-                    checkedValues.push(values);
+            $('.ProductButtonBoxFilter_label__OOSMj').each(function () {
+                // 체크박스가 체크된 상태라면
+                if ($(this).hasClass('ProductButtonBoxFilter_is-checked__OueIY')) {
+                    // 체크된 체크박스의 값을 checkedValues 배열에 추가합니다.
+                    checkedValues.push($(this).parent().find('input').val());
                 }
             });
 
             // 체크된 값들을 출력합니다.
-            console.log("체크된 값들:", checkedValues);
-            if(checkedValues.length > 0){
                 checkbox.get(checkedValues);
-
-            }
-
+        },
+        draw: function(products){
+            var dynamicHTML = '';
+            products.forEach(function(product) {
+                dynamicHTML += '<li class="ProductList_item__QXNrf">';
+                dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
+                dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
+                dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
+                dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
+                dynamicHTML += '<img src='+product.imgUrl+' alt="' + product.finPrdtCd + '" width="42" height="42" loading="eager">';
+                dynamicHTML += '</span></span>';
+                dynamicHTML += '<div class="ProductInfo_area-info__LPXq9">';
+                dynamicHTML += '<div class="ProductInfo_info-text__3Bv24">';
+                dynamicHTML += '<div class="ProductInfo_title-box__rhHbP">';
+                dynamicHTML += '<strong class="ProductInfo_title__tomzd">' + product.finPrdtNm + '</strong>';
+                dynamicHTML += '</div>';
+                dynamicHTML += '<p class="ProductInfo_bank-name__UNj3m">' + product.korCoNm + '</p>';
+                dynamicHTML += '</div>';
+                dynamicHTML += '<div class="ProductInfo_info-rates__h8fgP">';
+                dynamicHTML += '<em class="ProductInfo_top-rate__JKyeA">최고 <b class="ProductInfo_number__KjJso">'+product.bestIntr+'</b><span class="ProductInfo_percent__3571f">%</span></em>';
+                dynamicHTML += '<span class="ProductInfo_rate__ruWXq"> 기본'+product.basicIntr+'%</span>';
+                dynamicHTML += '</div></div></div></a></li>';
+            });
+            $('.ProductListHeader_highlight__V_U8l').html(products.length);
+            $('#depositList').html(dynamicHTML);
+            return dynamicHTML;
         },
         get : function(checkedValues){
-            console.log(checkedValues);
-
+            if(checkedValues.length==0){
+                $.ajax({
+                    url:'/deposit/all',
+                    success: function(res){
+                        checkbox.draw(res)
+                    }
+                })
+                return;
+            }
             $.ajax({
                 url: '/deposit/benefit',
                 data: {"termclassList": checkedValues},
                 success: function (res) {
-                    var dynamicHTML = '';
-                    res.forEach(function(product) {
-                        dynamicHTML += '<li class="ProductList_item__QXNrf">';
-                        dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="#">';
-                        dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
-                        dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
-                        dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
-                        dynamicHTML += '<img src="" alt="' + product.finPrdtCd + '" width="42" height="42" loading="eager">';
-                        dynamicHTML += '</span></span>';
-                        dynamicHTML += '<div class="ProductInfo_area-info__LPXq9">';
-                        dynamicHTML += '<div class="ProductInfo_info-text__3Bv24">';
-                        dynamicHTML += '<div class="ProductInfo_title-box__rhHbP">';
-                        dynamicHTML += '<strong class="ProductInfo_title__tomzd">' + product.finPrdtNm + '</strong>';
-                        dynamicHTML += '</div>';
-                        dynamicHTML += '<p class="ProductInfo_bank-name__UNj3m">' + product.korCoNm + '</p>';
-                        dynamicHTML += '</div>';
-                        dynamicHTML += '<div class="ProductInfo_info-rates__h8fgP">';
-                        dynamicHTML += '<em class="ProductInfo_top-rate__JKyeA">최고 <b class="ProductInfo_number__KjJso">최고금리</b><span class="ProductInfo_percent__3571f">%</span></em>';
-                        dynamicHTML += '<span class="ProductInfo_rate__ruWXq">기본금리%</span>';
-                        dynamicHTML += '</div></div></div></a></li>';
-                    });
-
-                    // 동적 생성된 HTML 코드를 원하는 위치에 삽입
-                    $('#depositList').html(dynamicHTML);
+                    console.log(res)
+                    if (res.length === 0) {
+                        $('#depositList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
+                        $('.ProductListHeader_highlight__V_U8l').html(res.length);
+                        return;
+                    }
+                    checkbox.draw(res);
                 },
                 error: function () {
                     console.log(e);
@@ -273,29 +284,8 @@
 <div class="ProductListSection_article__kDyT3"><h3 class="blind">은행상품 목록</h3>
     <div class="ProductListHeader_area-filter-info__9YO5n"><strong
             class="ProductListHeader_count__xQGto"><span
-            class="ProductListHeader_highlight__V_U8l">114</span>개</strong>
+            class="ProductListHeader_highlight__V_U8l">${all.size()}</span>개</strong>
         <div>
-            <div class="ProductListHeader_sign-up__WJREC"><input type="checkbox" class="hidden"
-                                                                 id="is-brokerage"><label
-                    for="is-brokerage" class="ProductListHeader_label__DnQBc"
-                    data-nclicks="deposit.easyjoin_filter"><span
-                    class="ProductListHeader_icon-check__F3yc3"><svg width="18" height="18"
-                                                                     viewBox="0 0 22 22"><g fill="none"
-                                                                                            fill-rule="evenodd"><circle
-                    cx="11" cy="11" r="10.5" fill="none" stroke="#bbbbbd"></circle><path fill="#bbbbbd"
-                                                                                         d="M9.013 15.429c-.18 0-.354-.07-.483-.198L5.2 11.937c-.128-.126-.2-.298-.2-.477 0-.18.072-.351.2-.477.268-.264.698-.264.966 0l2.847 2.814 6.82-6.743c.268-.264.699-.264.966 0 .128.126.2.298.2.478s-.072.351-.2.477l-7.302 7.222c-.13.128-.303.199-.484.198"></path></g></svg></span><span
-                    class="ProductListHeader_icon-npay__U1duM"><svg width="45" height="15"
-                                                                    viewBox="0 0 66 22" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg"><path
-                    d="M22 11C22 13.1756 21.3549 15.3023 20.1462 17.1113C18.9375 18.9202 17.2195 20.3301 15.2095 21.1627C13.1995 21.9952 10.9878 22.2131 8.85401 21.7886C6.72022 21.3642 4.76021 20.3166 3.22183 18.7782C1.68345 17.2398 0.635805 15.2798 0.211368 13.146C-0.213069 11.0122 0.00476298 8.80047 0.837327 6.79048C1.66989 4.78049 3.07979 3.06253 4.88873 1.85383C6.69768 0.645137 8.82441 0 11 0C13.9174 0 16.7153 1.15893 18.7782 3.22183C20.8411 5.28473 22 8.08262 22 11ZM12.8398 5.83V11.3602L8.98976 5.83H5.83V16.1838H9.1575V10.637L13.0075 16.17H16.1783V5.83H12.8398Z"
-                    fill="#767678"></path><path
-                    d="M61.4319 5.21944L58.3913 12.1478L54.9518 5.21944H52.3072L57.1783 14.8317L55.1703 19.3358H57.7384L64 5.2331L61.4319 5.21944ZM50.6171 15.9331H48.1037V14.9328C47.1894 15.7342 46.0108 16.1685 44.7953 16.1518C41.7901 16.1518 39.4379 13.692 39.4379 10.5763C39.4379 7.46057 41.7874 5.00079 44.7953 5.00079C46.0104 4.9833 47.189 5.41657 48.1037 6.21701V5.21944H50.6171V15.9331ZM48.3987 10.5899C48.3987 8.57019 46.9891 7.03694 45.1204 7.03694C43.2517 7.03694 41.842 8.57019 41.842 10.5899C41.842 12.6097 43.249 14.1429 45.1204 14.1429C46.9918 14.1429 48.3987 12.596 48.3987 10.5899ZM27.0082 19.3358H29.6309V15.023C30.5282 15.7695 31.6631 16.1699 32.83 16.1518C35.8352 16.1518 38.1901 13.692 38.1901 10.5763C38.1901 7.46057 35.8379 5.00079 32.83 5.00079C31.6117 4.9789 30.429 5.4126 29.5134 6.21701V5.21944H27L27.0082 19.3358ZM32.5186 7.03694C34.3872 7.03694 35.7969 8.57019 35.7969 10.5899C35.7969 12.6097 34.3872 14.1429 32.5186 14.1429C30.6499 14.1429 29.2402 12.6097 29.2402 10.5899C29.2402 8.57019 30.6335 7.03694 32.5186 7.03694Z"
-                    fill="#767678"></path></svg><span
-                    class="blind">네이버 페이</span></span>간편가입</label><span
-                    class="BubbleTooltip_article__HszaS BubbleTooltip_bottom__C1uhc"
-                    style="left: 9px; margin-top: 2px;"><span class="BubbleTooltip_tooltip__h3rx4"><span
-                    class="BubbleTooltip_inner__h8sgU"><em>네이버 아이디</em>로 간편하게!</span></span></span>
-            </div>
             <button class="ProductListHeader_button-select___A4vQ">최고금리순
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
                     <path d="m1 1 4 4 4-4" stroke="#767678" stroke-width="1.2" stroke-linecap="round"
@@ -312,7 +302,7 @@
                     <div class="ProductInfo_article__HX1ob">
                 <span class="ProductInfo_bi-circle__ngPKu">
                     <span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">
-                        <img src="" alt="${product.finPrdtCd}" width="42" height="42" loading="eager">
+                        <img src="${product.imgUrl}" alt="${product.finPrdtCd}" width="42" height="42" loading="eager">
                     </span>
                 </span>
                         <div class="ProductInfo_area-info__LPXq9">
@@ -324,10 +314,10 @@
                             </div>
                             <div class="ProductInfo_info-rates__h8fgP">
                                 <em class="ProductInfo_top-rate__JKyeA">
-                                    최고 <b class="ProductInfo_number__KjJso">최고금리</b>
+                                    최고 <b class="ProductInfo_number__KjJso">${product.bestIntr}</b>
                                     <span class="ProductInfo_percent__3571f">%</span>
                                 </em>
-                                <span class="ProductInfo_rate__ruWXq">기본 금리%</span>
+                                <span class="ProductInfo_rate__ruWXq">기본${String.format("%.2f",product.basicIntr)}%</span>
                             </div>
                         </div>
                             <%--                            <ul class="TagList_article__gRL9O ProductInfo_area-tag__6a4Nt">--%>
