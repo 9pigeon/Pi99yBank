@@ -30,4 +30,4 @@ app:
   kakao:
     client-id: 6010fcb18c95b478809e9791063221af
     client-secret: C3G32lHm9Zlw4ZXRQpkPfAS1MJ41bwej
-    redirect-url: http://localhost:8080/kakao/access
+    redirect-url: http://172.16.20.222:8080/kakao/access

@@ -33,16 +33,11 @@
 </head>
 <body>
 <header class="header">
-    <a class="d-flex flex-row" href="/home" >
+    <a class="d-flex flex-row" href="/main" >
         <img class="header_tosslogo mb-3" src="/asset/logo.png" alt="" class="headerIcon">
     </a>
-    <ul class="navbar_menu" >
-        <li class="navbar_item"><a href="http://127.0.0.1:5500/index.html">소개</a></li>
-        <li class="navbar_item"><a href="http://127.0.0.1:5500/index.html">자주 묻는 질문</a></li>
-        <li class="navbar_item"><a href="http://127.0.0.1:5500/index.html">Login</a></li>
-    </ul>
 </header>
-
+<div style="height: auto;min-height: 100%;padding-bottom:300px;">
 <c:choose>
     <c:when test="${center == null}">
         <jsp:include page="indexCenter.jsp"/>
@@ -51,9 +46,10 @@
         <jsp:include page="${center}.jsp"/>
     </c:otherwise>
 </c:choose>
+</div>
 
-
-<footer class="footer">
+<footer class="footer" style="position : relative;
+  transform : translateY(-100%);">
     <div class="footer_container">
         <div class="footer_menu">
             <ul class="footer_content">

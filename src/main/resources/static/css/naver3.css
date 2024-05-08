@@ -90,7 +90,7 @@ input::-ms-clear, select::-ms-expand {
 }
 
 #__next {
-    height: 100%
+    height: auto;
 }
 
 body {
@@ -1054,6 +1054,7 @@ body {
 .FlexibleLayout-module_article__bwPeF .FlexibleLayout-module_wrapper__9uXan {
     display: table-row;
     height: 100%
+
 }
 
 .FlexibleLayout-module_article__bwPeF .FlexibleLayout-module_row__P4p6X {
@@ -1063,7 +1064,8 @@ body {
 .FlexibleLayout-module_inner__hGuDc {
     margin-left: auto;
     margin-right: auto;
-    max-width: 568px
+    max-width: 568px;
+    padding: 40px 0;
 }
 
 @media (min-width: 1152px) {
@@ -3835,7 +3837,7 @@ body {
     position: fixed;
     left: 0;
     right: 0;
-    top: 0;
+    top: 65px;
     width: 100%;
     background-color: #fff;
     z-index: 1000;

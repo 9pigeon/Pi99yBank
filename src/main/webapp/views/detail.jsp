@@ -76,7 +76,6 @@
         }
     }
 </script>
->>>>>>> 01202e2 (Update Detail Page)
 <body>
 <div id="__next">
     <div class="FlexibleLayout-module_article__bwPeF FlexibleLayout-module_type-gray150__l7e7q">
