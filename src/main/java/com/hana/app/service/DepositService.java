@@ -41,8 +41,8 @@ public class DepositService implements HanaService<String, DepositDto> {
         return depositRepository.select();
     }
 
-    public List<DepositDto> getDepositList(int[] termclassList) throws Exception {
-        return depositRepository.getDepositList(termclassList);
+    public List<DepositDto> getDepositList(int[] termclassList, int[] bankList) throws Exception {
+        return depositRepository.getDepositList(termclassList, bankList);
     }
 
     public List<DepositDto> recDepositList(String[] similarList) throws Exception {

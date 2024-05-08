@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface DepositRepository extends HanaRepository<String, DepositDto> {
-    List<DepositDto> getDepositList(int[] termclassList);
+    List<DepositDto> getDepositList(int[] termclassList, int[] bankList);
     List<DepositDto> recDepositList(String[] similarList);
 
 }

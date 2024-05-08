@@ -25,13 +25,10 @@ public class SavingController {
 
     @RequestMapping("/benefit")
     @ResponseBody
-    public List<SavingDto> benefit(@RequestParam("termclassList") int[] termclassList){
-        log.info("benefit---------------------------------------------");
-        log.info("termclassList:{}", termclassList);
-
+    public List<SavingDto> benefit(@RequestParam(value = "termclassList", required = false) int[] termclassList, @RequestParam(value = "bankList", required = false) int[] bankList) {
         List<SavingDto> dtolist = null;
         try {
-            dtolist = savingService.getSavingList(termclassList);
+            dtolist = savingService.getSavingList(termclassList,bankList);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

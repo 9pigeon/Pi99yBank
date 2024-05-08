@@ -33,8 +33,8 @@ public class SavingService implements HanaService<String, SavingDto>{
         return savingRepository.selectOne(id);
     }
 
-    public List<SavingDto> getSavingList(int[] termclassList) throws Exception {
-        return savingRepository.getSavingList(termclassList);
+    public List<SavingDto> getSavingList(int[] termclassList, int[] bankList) throws Exception {
+        return savingRepository.getSavingList(termclassList,bankList);
     }
 
     @Override
