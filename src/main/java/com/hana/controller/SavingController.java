@@ -6,6 +6,7 @@ import com.hana.app.service.SavingOptionService;
 import com.hana.app.service.SavingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,5 +65,18 @@ public class SavingController {
             throw new RuntimeException(e);
         }
         return "detail";
+    }
+
+    @ResponseBody
+    @RequestMapping("/recommend")
+    public List<SavingDto> recommend(@RequestParam("arr") String[] arr) throws ParseException {
+
+        List<SavingDto> recSaving = null;
+        try {
+            recSaving = savingService.recSavingList(arr);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return recSaving;
     }
 }

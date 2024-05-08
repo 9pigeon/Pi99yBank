@@ -45,6 +45,10 @@ public class DepositService implements HanaService<String, DepositDto> {
         return depositRepository.getDepositList(termclassList);
     }
 
+    public List<DepositDto> recDepositList(String[] similarList) throws Exception {
+        return depositRepository.recDepositList(similarList);
+    }
+
     @Override
     public int reset() throws Exception {
         return depositRepository.reset();

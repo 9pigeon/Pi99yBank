@@ -6,8 +6,12 @@ import com.hana.app.service.DepositOptionService;
 import com.hana.app.service.DepositService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,15 +68,23 @@ public class DepositController {
         }
         return "detail";
     }
+
     @ResponseBody
     @RequestMapping("/recommend")
-    public List<DepositDto> recommend(@RequestParam("similar") String[] similar) {
-        List<DepositDto> all = null;
+    public List<DepositDto> recommend(@RequestParam("arr") String[] arr) throws ParseException {
+        //JSONObject recJson = (JSONObject) new JSONParser().parse(rec.toString());
+        //String[] similar = (String[]) recJson.get("similar_products");
+
+        log.info("-----------------------------------------");
+        for (int i = 0; i < arr.length; i++) {
+            log.info("arr[" + i + "]:" + arr[i]);
+        }
+        List<DepositDto> recDeposit = null;
         try {
-            all = depositService.get();
+            recDeposit = depositService.recDepositList(arr);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return all;
+        return recDeposit;
     }
 }

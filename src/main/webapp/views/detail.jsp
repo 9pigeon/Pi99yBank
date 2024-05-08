@@ -19,14 +19,16 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script>
     let fpc = '${depositDetail.finPrdtCd}';
-
+    let path = window.location.pathname.split("/");
+    let type = path[1];
+    // console.log(type);
     $(document).ready(function () {
         console.log(fpc);
         $.ajax({
-            url:'http://127.0.0.1:5000/recommendation?target_fin_prdt_cd=' + fpc +'&rownum=5&type=deposit',
+            url:'http://54.180.142.213:5000/recommendation?target_fin_prdt_cd=' + fpc +'&rownum=3&type='+ type,
             success:function(data){
-                console.log(data);
-                recommendation.info(data);
+                console.log(data["similar_products"]);
+                recommendation.info(data["similar_products"]);
             },
             error:function (e){
                 console.log(e);
@@ -35,13 +37,37 @@
     });
 
     let recommendation = {
-        info:function(data){
-
+        info:function(rec){
+            var recurl = "/" + type + "/recommend";
+            console.log(recurl);
             $.ajax({
-                url:'<c:url value="/deposit/recommmend"/>',
-                data:{"similar":data},
+                method:'POST',
+                url:"/" + type + "/recommend",
+                data:{arr:rec},
                 success:function (res){
-                    console.log(res);
+                    var dynamicHTML = '';
+                    res.forEach(function(product) {
+                        dynamicHTML += '<li class="ProductList_item__QXNrf">';
+                        dynamicHTML += '<a class="ProductList_link__pMmxO" data-nclicks="deposit.listing" href="/deposit/detail?fpc=' + product.finPrdtCd + '">';
+                        dynamicHTML += '<div class="ProductInfo_article__HX1ob">';
+                        dynamicHTML += '<span class="ProductInfo_bi-circle__ngPKu">';
+                        dynamicHTML += '<span class="sc-dmyCSP hQyNX bi-element" style="width: 42px; height: 42px;">';
+                        dynamicHTML += '<img src="' + product.imgUrl + '" alt="' + product.finPrdtCd + '" width="42" height="42" loading="eager">';
+                        dynamicHTML += '</span></span>';
+                        dynamicHTML += '<div class="ProductInfo_area-info__LPXq9">';
+                        dynamicHTML += '<div class="ProductInfo_info-text__3Bv24">';
+                        dynamicHTML += '<div class="ProductInfo_title-box__rhHbP">';
+                        dynamicHTML += '<strong class="ProductInfo_title__tomzd">' + product.finPrdtNm + '</strong>';
+                        dynamicHTML += '</div>';
+                        dynamicHTML += '<p class="ProductInfo_bank-name__UNj3m">' + product.korCoNm + '</p>';
+                        dynamicHTML += '</div>';
+                        dynamicHTML += '<div class="ProductInfo_info-rates__h8fgP">';
+                        dynamicHTML += '<em class="ProductInfo_top-rate__JKyeA">최고 <b class="ProductInfo_number__KjJso">' + product.bestIntr + '</b><span class="ProductInfo_percent__3571f">%</span></em>';
+                        dynamicHTML += '<span class="ProductInfo_rate__ruWXq"> 기본' + product.basicIntr + '%</span>';
+                        dynamicHTML += '</div></div></div></a></li>';
+                    });
+
+                    $('#recommendPd').html(dynamicHTML);
                 },
                 error:function (e){
                     console.log(e);
@@ -311,64 +337,7 @@
                     </div>
                 </div>
                 <div class="TabPanel_article__avbnv" id="RELATED_PRODUCT"><h4 class="TabPanel_title__DVLRd">비슷한 상품</h4>
-                    <ul>
-                        <li class="RelatedProduct_item__N6uvx"><a class="RelatedProduct_link__w9F7P"
-                                                                  data-nclicks="sv_contents.relatedlisting"
-                                                                  href="/savings/detail/0cd65923ff8f3ac2be03a340b686c62c">
-                            <div class="ProductInfo_article__HX1ob ProductInfo_type-related__Z_khs"><span
-                                    class="ProductInfo_bi-circle__ngPKu"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                               style="width: 40px; height: 40px;"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_KWANGJU_Profile.png"
-                                    alt="BK_KWANGJU_Profile" width="40" height="40" loading="eager"></span></span>
-                                <div class="ProductInfo_area-info__LPXq9">
-                                    <div class="ProductInfo_info-text__3Bv24">
-                                        <div class="ProductInfo_title-box__rhHbP"><strong
-                                                class="ProductInfo_title__tomzd">KJB아파트사랑정기예금</strong></div>
-                                        <p class="ProductInfo_bank-name__UNj3m">광주은행</p></div>
-                                    <div class="ProductInfo_info-rates__h8fgP"><em class="ProductInfo_top-rate__JKyeA">최고
-                                        <b class="ProductInfo_number__KjJso">4.10</b><span
-                                                class="ProductInfo_percent__3571f">%</span></em></div>
-                                </div>
-                            </div>
-                        </a></li>
-                        <li class="RelatedProduct_item__N6uvx"><a class="RelatedProduct_link__w9F7P"
-                                                                  data-nclicks="sv_contents.relatedlisting"
-                                                                  href="/savings/detail/069af00ee35bfb90fbf19245e36e543e">
-                            <div class="ProductInfo_article__HX1ob ProductInfo_type-related__Z_khs"><span
-                                    class="ProductInfo_bi-circle__ngPKu"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                               style="width: 40px; height: 40px;"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/SB_CHUNGJU_Profile.png"
-                                    alt="SB_CHUNGJU_Profile" width="40" height="40" loading="eager"></span></span>
-                                <div class="ProductInfo_area-info__LPXq9">
-                                    <div class="ProductInfo_info-text__3Bv24">
-                                        <div class="ProductInfo_title-box__rhHbP"><strong
-                                                class="ProductInfo_title__tomzd">펫팸 정기예금(단리, 복리)_천안지점</strong></div>
-                                        <p class="ProductInfo_bank-name__UNj3m">청주저축은행</p></div>
-                                    <div class="ProductInfo_info-rates__h8fgP"><em class="ProductInfo_top-rate__JKyeA">최고
-                                        <b class="ProductInfo_number__KjJso">4.10</b><span
-                                                class="ProductInfo_percent__3571f">%</span></em></div>
-                                </div>
-                            </div>
-                        </a></li>
-                        <li class="RelatedProduct_item__N6uvx"><a class="RelatedProduct_link__w9F7P"
-                                                                  data-nclicks="sv_contents.relatedlisting"
-                                                                  href="/savings/detail/aba9c72ee7cfc989f40b3ed645cc3d96">
-                            <div class="ProductInfo_article__HX1ob ProductInfo_type-related__Z_khs"><span
-                                    class="ProductInfo_bi-circle__ngPKu"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                               style="width: 40px; height: 40px;"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/SB_OHTOO_Profile.png"
-                                    alt="SB_OHTOO_Profile" width="40" height="40" loading="eager"></span></span>
-                                <div class="ProductInfo_area-info__LPXq9">
-                                    <div class="ProductInfo_info-text__3Bv24">
-                                        <div class="ProductInfo_title-box__rhHbP"><strong
-                                                class="ProductInfo_title__tomzd">e-복리정기예금</strong></div>
-                                        <p class="ProductInfo_bank-name__UNj3m">오투저축은행</p></div>
-                                    <div class="ProductInfo_info-rates__h8fgP"><em class="ProductInfo_top-rate__JKyeA">최고
-                                        <b class="ProductInfo_number__KjJso">4.01</b><span
-                                                class="ProductInfo_percent__3571f">%</span></em></div>
-                                </div>
-                            </div>
-                        </a></li>
+                    <ul id="recommendPd">
                     </ul>
                     <div class="TabPanelButton_article__SHBq5" data-nclicks="sv_contents.relatedmore"><a
                             class="TabPanelButton_button__JjUkq TabPanelButton_link__VKouK"

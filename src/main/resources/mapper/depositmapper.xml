@@ -7,6 +7,18 @@
     <delete id="reset">
         TRUNCATE depositProduct
     </delete>
+    <select id="recDepositList" parameterType="String" resultType="depositDto">
+        SELECT P.fin_prdt_cd,P.fin_prdt_nm,P.kor_co_nm, I.basic_intr, I.best_intr, fin_co_info.img_url
+        FROM depositProduct as P
+        JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr
+        from depositOption
+        GROUP BY fin_prdt_cd) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
+        JOIN fin_co_info ON P.fin_co_no = fin_co_info.fin_co_no
+        where P.fin_prdt_cd in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
     <select id="selectOne" parameterType="String" resultType="depositDto">
         SELECT P.*, I.basic_intr, I.best_intr, fin_co_info.img_url
@@ -29,12 +41,14 @@
             #{item}
         </foreach>
     </select>
+
     <select id="select" resultType="depositDto">
         SELECT P.*, I.basic_intr,I.best_intr,fin_co_info.img_url FROM depositProduct as P
         JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr from depositOption
               GROUP BY fin_prdt_cd) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
         JOIN fin_co_info ON P.fin_co_no = fin_co_info.fin_co_no
     </select>
+
     <insert id="insert" parameterType="depositDto">
         INSERT INTO depositProduct VALUES (#{finPrdtCd},#{dclsMonth},#{finCoNo},#{korCoNm},#{finPrdtNm},#{joinWay},#{mtrtInt},#{spclCnd},#{joinDeny},#{joinMember},#{etcNote},#{maxLimit},#{dclsStrtDay},#{dclsEndDay},#{finCoSubmDay})
     </insert>
