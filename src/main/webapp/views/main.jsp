@@ -43,6 +43,8 @@
         now.sort((a, b) => b[sortby] - a[sortby])
         checkbox.draw(now)
     }
+    let checkedValues = []; // 배열 초기화
+    let checkedBanks = [];
     let type='deposit'
     // li 요소를 클릭했을 때
     let checkbox = {
@@ -50,25 +52,48 @@
             $('.ProductButtonBoxFilter_label__OOSMj').click(function () {
                 // 해당 li 요소에 ProductButtonBoxFilter_is-checked__OueIY 클래스를 토글합니다.
                 $(this).toggleClass('ProductButtonBoxFilter_is-checked__OueIY');
+                if($(this).hasClass('ProductButtonBoxFilter_is-checked__OueIY')){
+                    $(this).find('.ProductButtonBoxFilter_icon__cz1Fg').html('<svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M.5 4.203 4.368 8 11.5 1" stroke="#2D9596" stroke-width="1.3"></path></svg>');
+                    checkedValues.push($(this).parent().find('input').val())
+                }
+                else{
+                    $(this).find('.ProductButtonBoxFilter_icon__cz1Fg').html('<svg width="10" height="10" viewBox="0 0 10 10"><path fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0" d="M4.615 0h1v10h-1z"></path></svg>');
+                    checkedValues.pop($(this).parent().find('input').val())
+                }
                 // 체크된 체크박스의 값을 업데이트합니다.
                 checkbox.update();
             });
+            $('.CompanyGroupFilter_label__a4gIa').click(function(){
+                $(this).toggleClass('CompanyGroupFilter_is-checked__0kOlO');
+                if($(this).hasClass('CompanyGroupFilter_is-checked__0kOlO')){
+                    $(this).find('.CompanyGroupFilter_icon__f7UPi').html('<svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M.5 4.203 4.368 8 11.5 1" stroke="#2D9596" stroke-width="1.3"></path></svg>');
+                    checkedBanks.push($(this).parent().find('input').attr('id'))
+                }
+                else{
+                    $(this).find('.CompanyGroupFilter_icon__f7UPi').html('<svg width="10" height="10" viewBox="0 0 10 10"><path fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0" d="M4.615 0h1v10h-1z"></path></svg>');
+                    checkedBanks.pop($(this).parent().find('input').attr('id'))
+                }
+                checkbox.update();
+            })
+            $('.PcScrollButton_right__dDmM_ > .PcScrollButton_button__8YJq3').click(function(){
+                $('.CompanyGroupFilter_list__LTekK').scrollLeft($('.CompanyGroupFilter_list__LTekK').scrollLeft()+550)
+            })
+            $('.PcScrollButton_left__Vwio6 > .PcScrollButton_button__8YJq3').click(function(){
+                $('.CompanyGroupFilter_list__LTekK').scrollLeft($('.CompanyGroupFilter_list__LTekK').scrollLeft()-550)
+            })
+            $('.ProductFilterTags_button-reset__2MVZg').click(function(){
+                checkedValues = []
+                checkedBanks = []
+                $('.ProductButtonBoxFilter_label__OOSMj').removeClass('ProductButtonBoxFilter_is-checked__OueIY')
+                $('.ProductButtonBoxFilter_icon__cz1Fg').html('<svg width="10" height="10" viewBox="0 0 10 10"><path fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0" d="M4.615 0h1v10h-1z"></path></svg>')
+                $('.CompanyGroupFilter_label__a4gIa').removeClass('CompanyGroupFilter_is-checked__0kOlO')
+                $('.CompanyGroupFilter_icon__f7UPi').html('<svg width="10" height="10" viewBox="0 0 10 10"><path fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0" d="M4.615 0h1v10h-1z"></path></svg>')
+                checkbox.update();
+            })
 
         },
         update : function(){
-            let checkedValues = []; // 배열 초기화
-
-            // 모든 체크박스를 선택합니다.
-            $('.ProductButtonBoxFilter_label__OOSMj').each(function () {
-                // 체크박스가 체크된 상태라면
-                if ($(this).hasClass('ProductButtonBoxFilter_is-checked__OueIY')) {
-                    // 체크된 체크박스의 값을 checkedValues 배열에 추가합니다.
-                    checkedValues.push($(this).parent().find('input').val());
-                }
-            });
-
-            // 체크된 값들을 출력합니다.
-            checkbox.get(checkedValues);
+            checkbox.get(checkedValues,checkedBanks);
         },
         draw: function(products){
             var dynamicHTML = '';
@@ -93,13 +118,13 @@
                 dynamicHTML += '</div></div></div></a></li>';
             });
             $('.ProductListHeader_highlight__V_U8l').html(products.length);
-            $('#depositList').html(dynamicHTML);
+            $('#productList').html(dynamicHTML);
             return dynamicHTML;
         },
-        get : function(checkedValues){
+        get : function(checkedValues,checkedBanks){
             if(type=='deposit')
             {
-                if(checkedValues.length==0){
+                if(checkedValues.length==0 && checkedBanks.length==0){
                     $.ajax({
                         url:'/deposit/all',
                         success: function(res){
@@ -112,10 +137,10 @@
                 }
                 $.ajax({
                     url: '/deposit/benefit',
-                    data: {"termclassList": checkedValues},
+                    data: {"termclassList": checkedValues,"bankList":checkedBanks},
                     success: function (res) {
                         if (res.length === 0) {
-                            $('#depositList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
+                            $('#productList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
                             $('.ProductListHeader_highlight__V_U8l').html(res.length);
                             return;
                         }
@@ -129,7 +154,7 @@
                 });
             }
             else{
-                if(checkedValues.length==0){
+                if(checkedValues.length==0 && checkedBanks.length==0){
                     $.ajax({
                         url:'/saving/all',
                         success: function(res){
@@ -142,10 +167,10 @@
                 }
                 $.ajax({
                     url: '/saving/benefit',
-                    data: {"termclassList": checkedValues},
+                    data: {"termclassList": checkedValues,"bankList":checkedBanks},
                     success: function (res) {
                         if (res.length === 0) {
-                            $('#depositList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
+                            $('#productList').html('<li class="ProductList_item__QXNrf">검색 결과가 없습니다.</li>');
                             $('.ProductListHeader_highlight__V_U8l').html(res.length);
                             return;
                         }
@@ -292,7 +317,7 @@
                     <div class="CompanyGroupFilter_article___x1Xq">
                         <ul class="CompanyGroupFilter_list__LTekK">
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0040000" type="checkbox" class="hidden"><label for="0040000"
+                                    id="10927" type="checkbox" class="hidden"><label for="10927"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -307,7 +332,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0260000" type="checkbox" class="hidden"><label for="0260000"
+                                    id="11625" type="checkbox" class="hidden"><label for="11625"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -322,7 +347,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0810000" type="checkbox" class="hidden"><label for="0810000"
+                                    id="13909" type="checkbox" class="hidden"><label for="13909"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -337,7 +362,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0200000" type="checkbox" class="hidden"><label for="0200000"
+                                    id="10001" type="checkbox" class="hidden"><label for="10001"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -352,7 +377,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0100000" type="checkbox" class="hidden"><label for="0100000"
+                                    id="13175" type="checkbox" class="hidden"><label for="13175"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -360,14 +385,14 @@
                                     src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_NH_Profile.png"
                                     alt="BK_NH_Profile" width="26" height="26" loading="eager"></span></span><span
                                     class="CompanyGroupFilter_name__oQoHu">NH농협</span><span
-                                    class="CompanyGroupFilter_icon__f7UPi" aria-hidden="true"><svg width="10"
+                                    class="CompanyGroupFilter_icon__f7UPi" aria-hidden=""><svg width="10"
                                                                                                    height="10"
                                                                                                    viewBox="0 0 10 10"><path
                                     fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0030000" type="checkbox" class="hidden"><label for="0030000"
+                                    id="10026" type="checkbox" class="hidden"><label for="10026"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -382,7 +407,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0020000" type="checkbox" class="hidden"><label for="0020000"
+                                    id="10030" type="checkbox" class="hidden"><label for="10030"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -397,22 +422,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="8000000" type="checkbox" class="hidden"><label for="8000000"
-                                                                                       class="CompanyGroupFilter_label__a4gIa"
-                                                                                       data-nclicks="deposit.highbank"><span
-                                    class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                                      style="width:26px;height:26px"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_CU_Profile.png"
-                                    alt="BK_CU_Profile" width="26" height="26" loading="eager"></span></span><span
-                                    class="CompanyGroupFilter_name__oQoHu">신협</span><span
-                                    class="CompanyGroupFilter_icon__f7UPi" aria-hidden="true"><svg width="10"
-                                                                                                   height="10"
-                                                                                                   viewBox="0 0 10 10"><path
-                                    fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
-                                                                                     d="M4.615 0h1v10h-1z"></path></svg></span></label>
-                            </li>
-                            <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0230000" type="checkbox" class="hidden"><label for="0230000"
+                                    id="10002" type="checkbox" class="hidden"><label for="10002"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -427,22 +437,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0710000" type="checkbox" class="hidden"><label for="0710000"
-                                                                                       class="CompanyGroupFilter_label__a4gIa"
-                                                                                       data-nclicks="deposit.highbank"><span
-                                    class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                                      style="width:26px;height:26px"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_EPOST_Profile.png"
-                                    alt="BK_EPOST_Profile" width="26" height="26" loading="eager"></span></span><span
-                                    class="CompanyGroupFilter_name__oQoHu">우정사업본부</span><span
-                                    class="CompanyGroupFilter_icon__f7UPi" aria-hidden="true"><svg width="10"
-                                                                                                   height="10"
-                                                                                                   viewBox="0 0 10 10"><path
-                                    fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
-                                                                                     d="M4.615 0h1v10h-1z"></path></svg></span></label>
-                            </li>
-                            <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0320000" type="checkbox" class="hidden"><label for="0320000"
+                                    id="10017" type="checkbox" class="hidden"><label for="10017"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -457,7 +452,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0310000" type="checkbox" class="hidden"><label for="0310000"
+                                    id="10016" type="checkbox" class="hidden"><label for="10016"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -472,7 +467,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0070000" type="checkbox" class="hidden"><label for="0070000"
+                                    id="14807" type="checkbox" class="hidden"><label for="14807"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -487,7 +482,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0390000" type="checkbox" class="hidden"><label for="0390000"
+                                    id="10024" type="checkbox" class="hidden"><label for="10024"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -502,7 +497,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0900000" type="checkbox" class="hidden"><label for="0900000"
+                                    id="15130" type="checkbox" class="hidden"><label for="15130"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -517,7 +512,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0340000" type="checkbox" class="hidden"><label for="0340000"
+                                    id="10019" type="checkbox" class="hidden"><label for="10019"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -532,7 +527,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0920000" type="checkbox" class="hidden"><label for="0920000"
+                                    id="17801" type="checkbox" class="hidden"><label for="17801"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -547,7 +542,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0370000" type="checkbox" class="hidden"><label for="0370000"
+                                    id="10022" type="checkbox" class="hidden"><label for="10022"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -562,7 +557,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0890000" type="checkbox" class="hidden"><label for="0890000"
+                                    id="14674" type="checkbox" class="hidden"><label for="14674"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -577,7 +572,7 @@
                                                                                      d="M4.615 0h1v10h-1z"></path></svg></span></label>
                             </li>
                             <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="0350000" type="checkbox" class="hidden"><label for="0350000"
+                                    id="10020" type="checkbox" class="hidden"><label for="10020"
                                                                                        class="CompanyGroupFilter_label__a4gIa"
                                                                                        data-nclicks="deposit.highbank"><span
                                     class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
@@ -585,21 +580,6 @@
                                     src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/BK_JEJU_Profile.png"
                                     alt="BK_JEJU_Profile" width="26" height="26" loading="eager"></span></span><span
                                     class="CompanyGroupFilter_name__oQoHu">제주</span><span
-                                    class="CompanyGroupFilter_icon__f7UPi" aria-hidden="true"><svg width="10"
-                                                                                                   height="10"
-                                                                                                   viewBox="0 0 10 10"><path
-                                    fill="#dcdee0" d="M0 4.616h10v1H0z"></path><path fill="#dcdee0"
-                                                                                     d="M4.615 0h1v10h-1z"></path></svg></span></label>
-                            </li>
-                            <li class="CompanyGroupFilter_item__xtbdc CompanyGroupFilter_bank__xXyzb"><input
-                                    id="2518000" type="checkbox" class="hidden"><label for="2518000"
-                                                                                       class="CompanyGroupFilter_label__a4gIa"
-                                                                                       data-nclicks="deposit.highbank"><span
-                                    class="CompanyGroupFilter_bi-circle__bPB_c"><span class="sc-dmyCSP hQyNX bi-element"
-                                                                                      style="width:26px;height:26px"><img
-                                    src="https://financial.pstatic.net/pie/common-bi/0.11.0/images/SB_WOORIFIN_Profile.png"
-                                    alt="SB_WOORIFIN_Profile" width="26" height="26" loading="eager"></span></span><span
-                                    class="CompanyGroupFilter_name__oQoHu">우리종합금융</span><span
                                     class="CompanyGroupFilter_icon__f7UPi" aria-hidden="true"><svg width="10"
                                                                                                    height="10"
                                                                                                    viewBox="0 0 10 10"><path
@@ -625,39 +605,6 @@
                                     <span class="blind">오른쪽 스크롤</span></button>
                             </div>
                         </div>
-                        <button type="button" class="CompanyGroupFilter_button-add-bank__zz_2d"
-                                data-nclicks="deposit.bankpopup">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M5.33275 3C5.83473 3 6.24167 3.40294 6.24167 3.9V7.2C6.24167 7.69706 5.83473 8.1 5.33275 8.1C4.83077 8.1 4.42383 7.69706 4.42383 7.2V3.9C4.42383 3.40294 4.83077 3 5.33275 3Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M5.33275 11.25C5.83473 11.25 6.24167 11.6529 6.24167 12.15V20.4C6.24167 20.8971 5.83473 21.3 5.33275 21.3C4.83077 21.3 4.42383 20.8971 4.42383 20.4V12.15C4.42383 11.6529 4.83077 11.25 5.33275 11.25Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M5.33271 11.175C6.16934 11.175 6.84757 10.5034 6.84757 9.675C6.84757 8.84657 6.16934 8.175 5.33271 8.175C4.49607 8.175 3.81784 8.84657 3.81784 9.675C3.81784 10.5034 4.49607 11.175 5.33271 11.175ZM5.33271 12.975C7.17331 12.975 8.66541 11.4975 8.66541 9.675C8.66541 7.85246 7.17331 6.375 5.33271 6.375C3.4921 6.375 2 7.85246 2 9.675C2 11.4975 3.4921 12.975 5.33271 12.975Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M18.6636 3C19.1655 3 19.5725 3.40294 19.5725 3.9V7.2C19.5725 7.69706 19.1655 8.1 18.6636 8.1C18.1616 8.1 17.7546 7.69706 17.7546 7.2V3.9C17.7546 3.40294 18.1616 3 18.6636 3Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M18.6636 11.25C19.1655 11.25 19.5725 11.6529 19.5725 12.15V20.4C19.5725 20.8971 19.1655 21.3 18.6636 21.3C18.1616 21.3 17.7546 20.8971 17.7546 20.4V12.15C17.7546 11.6529 18.1616 11.25 18.6636 11.25Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M18.6635 11.175C19.5002 11.175 20.1784 10.5034 20.1784 9.675C20.1784 8.84657 19.5002 8.175 18.6635 8.175C17.8269 8.175 17.1486 8.84657 17.1486 9.675C17.1486 10.5034 17.8269 11.175 18.6635 11.175ZM18.6635 12.975C20.5041 12.975 21.9962 11.4975 21.9962 9.675C21.9962 7.85246 20.5041 6.375 18.6635 6.375C16.8229 6.375 15.3308 7.85246 15.3308 9.675C15.3308 11.4975 16.8229 12.975 18.6635 12.975Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M11.998 16.2C12.5 16.2 12.907 16.6029 12.907 17.1V20.4C12.907 20.897 12.5 21.3 11.998 21.3C11.496 21.3 11.0891 20.897 11.0891 20.4V17.1C11.0891 16.6029 11.496 16.2 11.998 16.2Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M11.998 3C12.5 3 12.907 3.40294 12.907 3.9V12.15C12.907 12.6471 12.5 13.05 11.998 13.05C11.496 13.05 11.0891 12.6471 11.0891 12.15V3.9C11.0891 3.40294 11.496 3 11.998 3Z"
-                                      fill="#767678"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M11.998 16.125C12.8346 16.125 13.5129 15.4534 13.5129 14.625C13.5129 13.7965 12.8346 13.125 11.998 13.125C11.1614 13.125 10.4831 13.7965 10.4831 14.625C10.4831 15.4534 11.1614 16.125 11.998 16.125ZM11.998 17.925C13.8386 17.925 15.3307 16.4475 15.3307 14.625C15.3307 12.8024 13.8386 11.325 11.998 11.325C10.1574 11.325 8.66528 12.8024 8.66528 14.625C8.66528 16.4475 10.1574 17.925 11.998 17.925Z"
-                                      fill="#767678"></path>
-                            </svg>
-                            <span class="blind">금융사 추가</span></button>
                     </div>
                 </div>
                 <div class="ProductFilterSection_article__0nJDV">
@@ -787,22 +734,9 @@
                             </li>
                         </ul>
                     </div>
-                    <p class="ProductButtonBoxFilter_guide__a8Csp">*신협 상품에는 적용되지 않습니다</p>
                 </div>
                 <div class="ProductFilterTags_article__LS1Oc">
                     <div class="ProductFilterTags_area-keyword__AmEYF">
-                        <button type="button" class="ProductFilterTags_button__6cYTY"
-                                data-nclicks="deposit.selectfilterdelete">1금융권
-                            <svg width="10" height="9" viewBox="0 0 10 9">
-                                <path d="m1.152.653 7.784 7.784M8.936.653 1.152 8.437" stroke="#f6f8fa"></path>
-                            </svg>
-                            <span class="blind">삭제</span></button>
-                        <button type="button" class="ProductFilterTags_button__6cYTY"
-                                data-nclicks="deposit.selectfilterdelete">누구나가입
-                            <svg width="10" height="9" viewBox="0 0 10 9">
-                                <path d="m1.152.653 7.784 7.784M8.936.653 1.152 8.437" stroke="#f6f8fa"></path>
-                            </svg>
-                            <span class="blind">삭제</span></button>
                     </div>
                     <button type="button" class="ProductFilterTags_button-reset__2MVZg"
                             data-nclicks="deposit.filterrefresh">
@@ -836,42 +770,10 @@
                             </button>
                         </div>
                     </div>
-                    <ul id="depositList">
+                    <ul id="productList">
                     </ul>
-                    <div class="Pagination_article__Rg8y3">
-                        <ul class="Pagination_list__XfpSy">
-                            <li class="Pagination_item__afma0" data-nclicks="deposit.listpage">
-                                <button type="button"
-                                        class="Pagination_button-page__fhmTR Pagination_is-current___uUHI">1<span
-                                        class="blind">페이지로 이동</span></button>
-                            </li>
-                            <li class="Pagination_item__afma0" data-nclicks="deposit.listpage">
-                                <button type="button" class="Pagination_button-page__fhmTR">2<span
-                                        class="blind">페이지로 이동</span></button>
-                            </li>
-                            <li class="Pagination_item__afma0" data-nclicks="deposit.listpage">
-                                <button type="button" class="Pagination_button-page__fhmTR">3<span
-                                        class="blind">페이지로 이동</span></button>
-                            </li>
-                            <li class="Pagination_item__afma0" data-nclicks="deposit.listpage">
-                                <button type="button" class="Pagination_button-page__fhmTR">4<span
-                                        class="blind">페이지로 이동</span></button>
-                            </li>
-                            <li class="Pagination_item__afma0" data-nclicks="deposit.listpage">
-                                <button type="button" class="Pagination_button-page__fhmTR">5<span
-                                        class="blind">페이지로 이동</span></button>
-                            </li>
-                        </ul>
-                        <div class="Pagination_area-button__4IHU3">
-                            <button type="button" disabled="" data-nclicks="deposit.listpre"
-                                    class="Pagination_button__ukte8 Pagination_prev__EUF2_ Pagination_disabled__piP6E">
-                                <span class="blind">이전페이지</span></button>
-                            <button type="button" data-nclicks="deposit.listnext"
-                                    class="Pagination_button__ukte8 Pagination_next__2yfET"><span
-                                    class="blind">다음페이지</span></button>
-                        </div>
-                    </div>
                 </div>
+                    <div style="padding-bottom: 50px;"></div>
             </div>
         </div>
     </div>

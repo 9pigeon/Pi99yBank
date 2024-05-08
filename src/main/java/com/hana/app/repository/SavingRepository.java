@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface SavingRepository extends HanaRepository<String, SavingDto> {
-    List<SavingDto> getSavingList(int[] termclassList);
+    List<SavingDto> getSavingList(int[] termclassList, int[] bankList);
     List<SavingDto> recSavingList(String[] similarList);
 }
 

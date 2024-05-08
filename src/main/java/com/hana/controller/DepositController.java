@@ -28,13 +28,10 @@ public class DepositController {
 
     @RequestMapping("/benefit")
     @ResponseBody
-    public List<DepositDto> benefit(@RequestParam("termclassList") int[] termclassList){
-        log.info("benefit---------------------------------------------");
-        log.info("termclassList:{}", termclassList);
-
+    public List<DepositDto> benefit(@RequestParam(value = "termclassList", required = false) int[] termclassList, @RequestParam(value = "bankList", required = false) int[] bankList) {
         List<DepositDto> dtolist = null;
         try {
-            dtolist = depositService.getDepositList(termclassList);
+            dtolist = depositService.getDepositList(termclassList,bankList);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
