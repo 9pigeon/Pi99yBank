@@ -23,7 +23,8 @@ public class MainController {
         return "index";
     }
     @RequestMapping("/main")
-    public String main(Model model) throws Exception {
-        return "main";
+    public String main(Model model) {
+        model.addAttribute("center", "main");
+        return "index";
     }
 }
