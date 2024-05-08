@@ -207,12 +207,12 @@
 }
 
 .CompanySelectLayerFirstConsonantSection_label___vSNE.CompanySelectLayerFirstConsonantSection_is-checked__JjEEC {
-    color: #09aa5c
+    color: #2D9596
 }
 
 .CompanySelectLayerFirstConsonantSection_label___vSNE.CompanySelectLayerFirstConsonantSection_is-checked__JjEEC:before {
     z-index: 10;
-    border-color: #09aa5c
+    border-color: #2D9596
 }
 
 @media (min-width: 600px) {
@@ -262,7 +262,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #09aa5c
+    background-color: #2D9596
 }
 
 .CompanySelectLayerHeaderSection_label__fgNFK.CompanySelectLayerHeaderSection_is-checked__2_UN8:after {
@@ -296,8 +296,8 @@
 }
 
 .CompanySelectLayerListSection_label__gmePu.CompanySelectLayerListSection_is-checked__87u_W {
-    border-color: #09aa5c;
-    color: #09aa5c
+    border-color: #2D9596;
+    color: #2D9596
 }
 
 .CompanySelectLayerListSection_area-image__f9d2Z {
@@ -332,7 +332,7 @@
 }
 
 .CompanySelectLayerWrapper_button-bottom__F6oyh {
-    background-color: #09aa5c;
+    background-color: #2D9596;
     text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     color: #fff
 }
@@ -415,7 +415,7 @@
 
 .CompanySelectLayerWrapper_tab-list__Bl4ZA .CompanySelectLayerWrapper_label__dH28t .CompanySelectLayerWrapper_count__Cuy3W {
     margin-left: 2px;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .CompanySelectLayerWrapper_tab-list__Bl4ZA .CompanySelectLayerWrapper_label__dH28t.CompanySelectLayerWrapper_is-checked__8D0eB {
@@ -499,7 +499,10 @@
 }
 
 .PcScrollButton_article__R0n47.PcScrollButton_left__Vwio6 {
-    left: 0
+    left: 0;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), #fff 50%, #fff 12px, #fff 0)
 }
 
 .PcScrollButton_article__R0n47.PcScrollButton_left__Vwio6:before {
@@ -549,7 +552,8 @@
 
 .CompanyGroupFilter_list__LTekK {
     -ms-overflow-style: none;
-    scrollbar-width: none
+    scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 .CompanyGroupFilter_list__LTekK::-webkit-scrollbar {
@@ -558,17 +562,28 @@
 
 .CompanyGroupFilter_article___x1Xq {
     position: relative;
-    padding: 16px 51px 16px 0
+    padding: 16px 10px 16px 10px
+}
+
+.CompanyGroupFilter_article___x1Xq:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    width: 35px;
+    z-index: 10;
+    background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0.5) 20%, #fff)
 }
 
 .CompanyGroupFilter_article___x1Xq:after {
     content: "";
     position: absolute;
     top: 0;
-    right: 50px;
+    right: 10px;
     bottom: 0;
-    width: 24px;
-    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, .5) 50%, #fff)
+    width: 35px;
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, .5) 20%, #fff)
 }
 
 .CompanyGroupFilter_article___x1Xq:hover .CompanyGroupFilter_pc-scroll-button-wrapper__mTUip {
@@ -667,7 +682,7 @@
 
 .CompanyGroupFilter_label__a4gIa.CompanyGroupFilter_is-checked__0kOlO .CompanyGroupFilter_name__oQoHu {
     font-weight: 500;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .CompanyGroupFilter_button-add-bank__zz_2d {
@@ -695,7 +710,7 @@
     min-width: 8px;
     padding: 0 5px;
     border-radius: 9px;
-    background-color: #09aa5c;
+    background-color: #2D9596;
     font-size: 11px;
     font-weight: 700;
     line-height: 18px;
@@ -710,10 +725,6 @@
     .CompanyGroupFilter_article___x1Xq {
         padding-top: 16px;
         padding-bottom: 16px
-    }
-
-    .CompanyGroupFilter_article___x1Xq:after {
-        width: 16px
     }
 }
 
@@ -920,7 +931,7 @@
 }
 
 .ProductAmountFilter_button__7X_CW {
-    background-color: #09aa5c;
+    background-color: #2D9596;
     text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     color: #fff
 }
@@ -967,7 +978,7 @@
 }
 
 .ProductButtonBoxFilter_article__Jetia {
-    padding: 0 14px 12px
+    padding: 14px 12px
 }
 
 .ProductButtonBoxFilter_inner__G7UCr {
@@ -1014,7 +1025,7 @@
 
 .ProductButtonBoxFilter_label__OOSMj.ProductButtonBoxFilter_is-checked__OueIY {
     font-weight: 500;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductButtonBoxFilter_guide__a8Csp {
@@ -1053,7 +1064,7 @@
 .ProductPeriodFilter_range-container__isaSt:before {
     left: -11px;
     border-radius: 5px 0 0 5px;
-    background-color: #09aa5c
+    background-color: #2D9596
 }
 
 .ProductPeriodFilter_range-container__isaSt:after {
@@ -1065,7 +1076,7 @@
 .ProductPeriodFilter_circle__0MqLf {
     width: 22px;
     height: 22px;
-    border: 4px solid #09aa5c;
+    border: 4px solid #2D9596;
     border-radius: 50%;
     outline: none;
     box-sizing: border-box;
@@ -1111,7 +1122,7 @@
 
 .ProductPeriodFilter_label__r5hQL.ProductPeriodFilter_is-selected__FJeQe {
     font-weight: 700;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductRegionFilter_article__fQ_wo {
@@ -1152,7 +1163,7 @@
 }
 
 .ProductRegionFilter_button-location__5o_At.ProductRegionFilter_is-activated__2DWeL {
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductRegionFilter_list__H_ReJ {
@@ -1181,7 +1192,7 @@
 
 .ProductRegionFilter_label__Wt__Y.ProductRegionFilter_is-checked__qP0Pf {
     font-weight: 500;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductRegionFilter_label__Wt__Y.ProductRegionFilter_is-disabled__oDPZi {
@@ -1212,7 +1223,7 @@
 
 .ProductFilter_button___BQM5 .ProductFilter_count__vdpc3, .ProductFilter_item__PhP2B.ProductFilter_is-checked__ZO5ba .ProductFilter_button___BQM5:not(.ProductFilter_type-expand___jUS2), .ProductFilter_item__PhP2B.ProductFilter_is-expanded__Kcrx6 .ProductFilter_button___BQM5.ProductFilter_type-expand___jUS2 {
     font-weight: 500;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductFilter_article__5tkIg {
@@ -1444,7 +1455,7 @@
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -.3px;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductInfo_info-rates__h8fgP .ProductInfo_number__KjJso {
@@ -1512,7 +1523,7 @@
     margin-top: 3px;
     font-weight: 700;
     line-height: 20px;
-    color: #09aa5c
+    color: #2D9596
 }
 
 .LoanBanner_article__u__0C.LoanBanner_type-ui__GgGnn {
@@ -1575,7 +1586,7 @@
     right: 0;
     padding: 8px 12px 7px;
     border-radius: 6px;
-    background-color: #09aa5c;
+    background-color: #2D9596;
     font-weight: 700;
     text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     color: #fff
@@ -1707,7 +1718,7 @@
 }
 
 .ProductListHeader_area-filter-info__9YO5n .ProductListHeader_count__xQGto .ProductListHeader_highlight__V_U8l {
-    color: #09aa5c
+    color: #2D9596
 }
 
 .ProductListHeader_area-filter-info__9YO5n .ProductListHeader_button-select___A4vQ {
