@@ -826,7 +826,7 @@
                 <div class="ProductListSection_article__kDyT3"><h3 class="blind">은행상품 목록</h3>
                     <div class="ProductListHeader_area-filter-info__9YO5n"><strong
                             class="ProductListHeader_count__xQGto"><span
-                            class="ProductListHeader_highlight__V_U8l">${all.size()}</span>개</strong>
+                            class="ProductListHeader_highlight__V_U8l"></span>개</strong>
                         <div>
                             <button class="ProductListHeader_button-select___A4vQ">최고금리순
                                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
