@@ -17,12 +17,62 @@
     $(function () {
         homebody.init();
     });
+    let animate = function(){
+        let intro_container = document.querySelector('.intro_container');
+        intro_container.classList.add('intro_display');
+    }
 </script>
+<style>
+    .intro_container{
+        position: relative;
+        top: 30%;
+        display: inline-block;
+        opacity: 0;
+        transition: all 1s ease;
+    }
+
+    .intro_display{
+        opacity: 1;
+    }
+
+    @keyframes pi99yfade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-moz-keyframes pi99yfade { /* Firefox */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-webkit-keyframes pi99yfade { /* Safari and Chrome */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-o-keyframes pi99yfade { /* Opera */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
 <html>
 <head>
     <title>피기뱅크</title>
 </head>
-<body>
+<body onload="animate()">
 <main class="main">
     <div class="login_btn">
         <a href="${kakaoUrl}">
