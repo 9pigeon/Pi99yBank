@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     let homebody = {
         init: function () {
@@ -18,7 +20,7 @@
 </script>
 <html>
 <head>
-    <title>Title</title>
+    <title>피기뱅크</title>
 </head>
 <body>
 <main class="main">

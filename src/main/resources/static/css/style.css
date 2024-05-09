@@ -1,35 +1,36 @@
 @font-face {
   font-family: TossFaceFont;
-  src: url('font/TossFaceFontMac.ttf');
+  src: url('../font/TossFaceFontMac.ttf');
 }
+
 
 @font-face{
   font-family: Noto Sans;
-  src: url('font/Noto_Sans_KR/NotoSansKR-Black.otf');
+  src: url('../font/Noto_Sans_KR/NotoSansKR-Black.otf');
   font-weight: 900;
 }
 
 @font-face{
   font-family: Noto Sans;
-  src: url('font/Noto_Sans_KR/NotoSansKR-Bold.otf');
+  src: url('../font/Noto_Sans_KR/NotoSansKR-Bold.otf');
   font-weight: 700;
 }
 
 @font-face{
   font-family: Noto Sans;
-  src: url('font/Noto_Sans_KR/NotoSansKR-Light.otf');
+  src: url('../font/Noto_Sans_KR/NotoSansKR-Light.otf');
   font-weight: 500;
 }
 
 @font-face{
   font-family: Noto Sans;
-  src: url('font/Noto_Sans_KR/NotoSansKR-Medium.otf');
+  src: url('../font/Noto_Sans_KR/NotoSansKR-Medium.otf');
   font-weight: 400;
 }
 
 @font-face{
   font-family: Noto Sans;
-  src: url('font/Noto_Sans_KR/NotoSansKR-Regular.otf');
+  src: url('../font/Noto_Sans_KR/NotoSansKR-Regular.otf');
   font-weight: 300;
 }
 
@@ -181,7 +182,7 @@ a{
 
 .intro_wallpaper{
   height: 100%;
-  background: url('asset/main_body.png') no-repeat center center;
+  background: url('../asset/main_body.png') no-repeat center center;
   background-size: cover;
   display: flex;
   flex-flow: column;
@@ -198,10 +199,44 @@ a{
 .intro_container{
   position: relative;
   top: 30%;
-  opacity: 1;
-  data-aos: appear ease-out 2.5s;
-  data-aos-once:false;
-  display:none;
+  display: inline-block;
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .intro_textwrap{
@@ -808,7 +843,6 @@ a{
   width: 100%;
   height: 700px;
   overflow: hidden;
-  background-image: url('asset/newtossim/section2_4_big.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0 auto;

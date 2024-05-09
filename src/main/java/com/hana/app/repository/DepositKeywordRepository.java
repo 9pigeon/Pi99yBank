@@ -6,8 +6,11 @@ import com.hana.app.frame.HanaRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Mapper
 @Repository
 public interface DepositKeywordRepository extends HanaRepository<DepositKeywordPKDto, DepositKeywordDto> {
+    List<DepositKeywordDto> selectDepositKeywordList(String finPrdtCd);
 }

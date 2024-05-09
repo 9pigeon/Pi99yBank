@@ -48,11 +48,11 @@
         </where>
     </select>
     <select id="selectOne" parameterType="String" resultType="savingDto">
-        SELECT P.*, I.basic_intr, I.best_intr, fin_co_info.img_url
+        SELECT P.*,I.intr_rate_type, I.basic_intr, I.best_intr, fin_co_info.img_url
         FROM savingProduct as P
-                 JOIN (SELECT fin_prdt_cd, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr
+                 JOIN (SELECT fin_prdt_cd, intr_rate_type, min(intr_rate) AS basic_intr, max(intr_rate2) AS best_intr
                        from savingOption
-                       GROUP BY fin_prdt_cd) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
+                       GROUP BY fin_prdt_cd, intr_rate_type) AS I ON P.fin_prdt_cd = I.fin_prdt_cd
                  JOIN fin_co_info ON P.fin_co_no = fin_co_info.fin_co_no
         where P.fin_prdt_cd = #{id}
     </select>
