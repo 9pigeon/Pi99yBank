@@ -12,6 +12,10 @@
         INSERT INTO savingKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
     </insert>
 
+    <select id="selectSavingKeywordList" parameterType="String" resultType="savingKeywordDto">
+        SELECT distinct term_class FROM savingKeyword WHERE product_id=#{productId} AND term_class!=13
+        ORDER BY 1
+    </select>
 
 
 </mapper>

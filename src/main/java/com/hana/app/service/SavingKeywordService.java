@@ -1,5 +1,6 @@
 package com.hana.app.service;
 
+import com.hana.app.data.DepositKeywordDto;
 import com.hana.app.data.SavingKeywordDto;
 import com.hana.app.frame.HanaService;
 import com.hana.app.repository.SavingKeywordRepository;
@@ -41,6 +42,10 @@ public class SavingKeywordService implements HanaService<String, SavingKeywordDt
     @Override
     public int reset() throws Exception {
         return savingKeywordRepository.reset();
+    }
+
+    public List<SavingKeywordDto> getSavingKeywordByCd(String finPrdtCd) throws Exception {
+        return savingKeywordRepository.selectSavingKeywordList(finPrdtCd);
     }
 
 }

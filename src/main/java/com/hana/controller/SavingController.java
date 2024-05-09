@@ -1,7 +1,9 @@
 package com.hana.controller;
 
 import com.hana.app.data.SavingDto;
+import com.hana.app.data.SavingKeywordDto;
 import com.hana.app.data.SavingOptionDto;
+import com.hana.app.service.SavingKeywordService;
 import com.hana.app.service.SavingOptionService;
 import com.hana.app.service.SavingService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 public class SavingController {
     final SavingService savingService;
     final SavingOptionService savingOptionService;
+    final SavingKeywordService savingKeywordService;
 
     @RequestMapping("/benefit")
     @ResponseBody
@@ -51,17 +54,22 @@ public class SavingController {
     @RequestMapping("/detail")
     public String detail(@RequestParam("fpc") String fpc, Model model) {
         List<SavingOptionDto> options = null;
+        List<SavingKeywordDto> keywords = null;
         SavingDto dto = null;
         try {
             dto = savingService.get(fpc);
             model.addAttribute("depositDetail", dto);
+
+            keywords = savingKeywordService.getSavingKeywordByCd(fpc);
+            model.addAttribute("keywords", keywords);
 
             options = savingOptionService.getIntr(fpc);
             model.addAttribute("options", options);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "detail";
+        model.addAttribute("center","detail");
+        return "index";
     }
 
     @ResponseBody

@@ -50,4 +50,8 @@ public class DepositKeywordService implements HanaService<DepositKeywordPKDto, D
         return depositKeywordRepository.reset();
     }
 
+    public List<DepositKeywordDto> getDepositKeywordByCd(String finPrdtCd) throws Exception {
+        return depositKeywordRepository.selectDepositKeywordList(finPrdtCd);
+    }
+
 }

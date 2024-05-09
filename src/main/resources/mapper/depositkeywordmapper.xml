@@ -30,4 +30,9 @@
     INSERT INTO depositKeyword VALUES (#{productId},#{termId},#{termClass},#{termContent},#{termRate})
     </insert>
 
+    <select id="selectDepositKeywordList" parameterType="String" resultType="depositKeywordDto">
+        SELECT distinct term_class FROM depositKeyword WHERE product_id=#{productId} AND term_class!=13
+        ORDER BY 1
+    </select>
+
 </mapper>

@@ -1,7 +1,9 @@
 package com.hana.controller;
 
 import com.hana.app.data.DepositDto;
+import com.hana.app.data.DepositKeywordDto;
 import com.hana.app.data.DepositOptionDto;
+import com.hana.app.service.DepositKeywordService;
 import com.hana.app.service.DepositOptionService;
 import com.hana.app.service.DepositService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Controller
@@ -25,6 +28,7 @@ import java.util.List;
 public class DepositController {
     final DepositService depositService;
     final DepositOptionService depositOptionService;
+    final DepositKeywordService depositKeywordService;
 
     @RequestMapping("/benefit")
     @ResponseBody
@@ -53,17 +57,24 @@ public class DepositController {
     @RequestMapping("/detail")
     public String detail(@RequestParam("fpc") String fpc, Model model) {
         List<DepositOptionDto> options = null;
+        List<DepositKeywordDto> keywords = null;
         DepositDto dto = null;
         try {
             dto = depositService.get(fpc);
             model.addAttribute("depositDetail", dto);
-
+            Field[] fields =dto.getClass().getDeclaredFields();
+            for(Field field : fields){
+                log.info("fields:"+field.getName());
+            }
+            keywords = depositKeywordService.getDepositKeywordByCd(fpc);
+            model.addAttribute("keywords", keywords);
             options = depositOptionService.getIntr(fpc);
             model.addAttribute("options", options);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "detail";
+        model.addAttribute("center","detail");
+        return "index";
     }
 
     @ResponseBody

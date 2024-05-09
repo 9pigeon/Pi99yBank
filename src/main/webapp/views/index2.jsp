@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>Pi99yBank</title>
+    <title>피기뱅크</title>
   </head>
   <body>
     <!-- start of navigation -->
